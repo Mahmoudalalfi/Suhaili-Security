@@ -219,14 +219,8 @@ export default function ContactPage() {
             <div>
               <p className="contact-detail-key">{t('contact.emailLabel')}</p>
               {[
-                'kontact@suhaili.de',
-                'hussein@suhaili.de',
-                'hasan@suhaili.de',
-                'service.plan@suhaili.de',
-                'service@suhaili.de',
-                'buero@suhaili.de',
-                'security@suhaili.de',
-                'security.plan@suhaili.de',
+                'info@suhaili.de',
+                'contact@suhaili.de',
               ].map((addr) => (
                 <a key={addr} href={`mailto:${addr}`} className="contact-detail-link" style={{ display: 'block' }}>
                   {addr}

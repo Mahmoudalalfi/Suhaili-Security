@@ -99,12 +99,8 @@ export default function Footer() {
                 : 'Professional security solutions for businesses and private clients across Germany.'}
             </p>
             {[
+              'info@suhaili.de',
               'contact@suhaili.de',
-              'security@suhaili.de',
-              'buero@suhaili.de',
-              'hussein@suhaili.de',
-              'hasan@suhaili.de',
-              'security.plan@suhaili.de',
             ].map((addr, i) => (
               <a
                 key={addr}

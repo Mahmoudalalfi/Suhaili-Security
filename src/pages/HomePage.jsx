@@ -866,7 +866,7 @@ export default function HomePage() {
             transition={{ delay: 0.35, duration: 0.6, ease: 'easeOut' }}
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(32px, 5.5vw, 72px)',
+              fontSize: 'clamp(26px, 5.5vw, 72px)',
               fontWeight: 900,
               letterSpacing: '-0.04em',
               lineHeight: 0.95,
@@ -887,7 +887,7 @@ export default function HomePage() {
             transition={{ delay: 0.45, duration: 0.6, ease: 'easeOut' }}
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(32px, 5.5vw, 72px)',
+              fontSize: 'clamp(26px, 5.5vw, 72px)',
               fontWeight: 900,
               letterSpacing: '-0.04em',
               lineHeight: 1.05,
@@ -926,13 +926,13 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.55, ease: 'easeOut' }}
             style={{
-              fontSize: 'clamp(13px, 1.5vw, 17px)',
+              fontSize: 'clamp(12px, 1.5vw, 17px)',
               fontWeight: 300,
               color: 'rgba(210,210,210,0.7)',
-              lineHeight: 1.6,
+              lineHeight: 1.5,
               letterSpacing: '0.01em',
-              maxWidth: '30em',
-              marginBottom: 'clamp(16px, 2.8vh, 30px)',
+              maxWidth: '24em',
+              marginBottom: 'clamp(14px, 2.8vh, 30px)',
             }}
           >
             {t('home.heroSub')}
@@ -961,7 +961,7 @@ export default function HomePage() {
           </motion.div>
 
           {/* Trust badges */}
-          <GyroTiltCard style={{ marginTop: 'clamp(14px, 2.2vh, 26px)', marginBottom: 'clamp(60px, 12vh, 24px)', borderRadius: 14 }}>
+          <GyroTiltCard style={{ marginTop: 'clamp(14px, 2.2vh, 26px)', marginBottom: 'clamp(70px, 12vh, 100px)', borderRadius: 14 }}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -975,6 +975,8 @@ export default function HomePage() {
               backdropFilter: 'blur(8px)',
               WebkitBackdropFilter: 'blur(8px)',
               overflow: 'hidden',
+              width: '100%',
+              boxSizing: 'border-box',
             }}
           >
             {[
@@ -984,8 +986,9 @@ export default function HomePage() {
             ].map(({ num, label }, i) => (
               <div key={num} style={{
                 display: 'flex', flexDirection: 'column', gap: 4,
-                padding: 'clamp(10px, 2vw, 16px) clamp(14px, 3vw, 24px)',
-                flex: 1,
+                padding: '12px 16px',
+                flex: '1 1 0',
+                minWidth: 0,
                 borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none',
                 position: 'relative',
               }}>
@@ -999,19 +1002,23 @@ export default function HomePage() {
                 }} />
                 <span style={{
                   fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(20px, 2.8vw, 28px)',
+                  fontSize: 'clamp(18px, 5vw, 28px)',
                   fontWeight: 800,
                   color: '#fff',
                   letterSpacing: '-0.03em',
                   lineHeight: 1,
                   textShadow: '0 0 20px rgba(192,57,43,0.4)',
+                  whiteSpace: 'nowrap',
                 }}>{num}</span>
                 <span style={{
-                  fontSize: 9,
+                  fontSize: 'clamp(8px, 2vw, 9px)',
                   fontWeight: 600,
-                  letterSpacing: '0.13em',
+                  letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   color: 'rgba(255,255,255,0.38)',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 }}>{label}</span>
               </div>
             ))}
@@ -1025,7 +1032,7 @@ export default function HomePage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.8 }}
           style={{
-            position: 'absolute', bottom: 32, left: '50%',
+            position: 'absolute', bottom: 19, left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 20,
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,

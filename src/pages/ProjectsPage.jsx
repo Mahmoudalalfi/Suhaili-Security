@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
 const CDN = 'https://res.cloudinary.com/dfc0qnh88/image/upload'
 
 const PROJECT_ITEMS = [
-  { id: 'p1', image: `${CDN}/v1777654837/project-retail-security_qfziil.png` },
+  { id: 'p1', image: `${CDN}/v1777671139/Mascot4_xccqdp.png` },
   { id: 'p2', image: `${CDN}/v1777654834/project-logistics-cctv_nqt4ml.png` },
   { id: 'p3', image: `${CDN}/v1777654836/project-vip-protection_aoqpin.png` },
   { id: 'p4', image: `${CDN}/v1777654840/project-cctv-monitoring_xv7nh1.png` },

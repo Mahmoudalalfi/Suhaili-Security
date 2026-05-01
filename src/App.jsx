@@ -34,13 +34,14 @@ function PageTransition({ children }) {
 
   useEffect(() => {
     if (!el.current) return
-    // Scroll to top — works with both native and Lenis scroll
     window.scrollTo(0, 0)
     document.documentElement.scrollTop = 0
     gsap.fromTo(el.current,
       { opacity: 0, y: 16 },
       { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', clearProps: 'all' }
     )
+    // Recalculate all scroll trigger positions after the new page renders
+    requestAnimationFrame(() => ScrollTrigger.refresh())
   }, [location.pathname])
 
   return <div ref={el} className="page-wrapper">{children}</div>
@@ -76,17 +77,19 @@ function AppRoutes() {
 function LenisProvider() {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      wheelMultiplier: 1.2,
     })
 
-    // Hook Lenis into GSAP ticker so ScrollTrigger stays in sync
-    gsap.ticker.add((time) => lenis.raf(time * 1000))
+    // Keep a stable reference so the ticker callback can be removed cleanly
+    const onTick = (time) => lenis.raf(time * 1000)
+    gsap.ticker.add(onTick)
     gsap.ticker.lagSmoothing(0)
 
     return () => {
-      gsap.ticker.remove((time) => lenis.raf(time * 1000))
+      gsap.ticker.remove(onTick)
       lenis.destroy()
     }
   }, [])
