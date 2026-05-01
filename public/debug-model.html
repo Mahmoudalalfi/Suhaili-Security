@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script>
+<style>
+  body { background: #111; display: flex; flex-wrap: wrap; gap: 10px; padding: 20px; }
+  model-viewer { width: 250px; height: 250px; background: transparent; border: 1px solid #444; }
+  p { color: white; font-size: 11px; text-align: center; margin: 2px 0 0; }
+  div { display: flex; flex-direction: column; }
+</style>
+</head>
+<body>
+<div><model-viewer src="/cctv.glb" camera-orbit="0deg 90deg 3m" camera-controls></model-viewer><p>0deg 90deg (front)</p></div>
+<div><model-viewer src="/cctv.glb" camera-orbit="90deg 90deg 3m" camera-controls></model-viewer><p>90deg 90deg (right side)</p></div>
+<div><model-viewer src="/cctv.glb" camera-orbit="-90deg 90deg 3m" camera-controls></model-viewer><p>-90deg 90deg (left side)</p></div>
+<div><model-viewer src="/cctv.glb" camera-orbit="180deg 90deg 3m" camera-controls></model-viewer><p>180deg 90deg (back)</p></div>
+<div><model-viewer src="/cctv.glb" camera-orbit="0deg 45deg 3m" camera-controls></model-viewer><p>0deg 45deg (top-front)</p></div>
+<div><model-viewer src="/cctv.glb" camera-orbit="0deg 135deg 3m" camera-controls></model-viewer><p>0deg 135deg (bottom-front)</p></div>
+<div><model-viewer src="/cctv.glb" orientation="0deg 90deg 0deg" camera-orbit="0deg 90deg 3m" camera-controls></model-viewer><p>rotated Y90 + front view</p></div>
+<div><model-viewer src="/cctv.glb" orientation="0deg -90deg 0deg" camera-orbit="0deg 90deg 3m" camera-controls></model-viewer><p>rotated Y-90 + front view</p></div>
+</body>
+</html>
