@@ -69,6 +69,7 @@ export default function ContactPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [privacyChecked, setPrivacyChecked] = useState(false)
 
   const mailTo = t('imprint.email')
   const addressBlock = useMemo(
@@ -219,8 +220,9 @@ export default function ContactPage() {
             <div>
               <p className="contact-detail-key">{t('contact.emailLabel')}</p>
               {[
-                'info@suhaili.de',
-                'contact@suhaili.de',
+                'Security@suhaili.de',
+                'Info.Security@suhaili.de',
+                'Kontakt.Security@suhaili.de',
               ].map((addr) => (
                 <a key={addr} href={`mailto:${addr}`} className="contact-detail-link" style={{ display: 'block' }}>
                   {addr}
@@ -322,18 +324,27 @@ export default function ContactPage() {
                 required
               />
             </label>
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, cursor: 'pointer', marginBottom: 4 }}>
+              <input
+                type="checkbox"
+                required
+                checked={privacyChecked}
+                onChange={e => setPrivacyChecked(e.target.checked)}
+                style={{ marginTop: 3, accentColor: 'var(--red-light)', flexShrink: 0, width: 16, height: 16, cursor: 'pointer' }}
+              />
+              <span style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.6 }}>
+                {lang === 'de'
+                  ? <>Ich habe die <Link to="/datenschutz" className="contact-privacy-link">Datenschutzerklärung</Link> gelesen und akzeptiere sie. {<abbr title="Pflichtfeld" style={{ color: 'var(--red-light)', textDecoration: 'none' }}>*</abbr>}</>
+                  : <>I have read and accept the <Link to="/datenschutz" className="contact-privacy-link">Privacy Policy</Link>. {<abbr title="Required" style={{ color: 'var(--red-light)', textDecoration: 'none' }}>*</abbr>}</>
+                }
+              </span>
+            </label>
             <div className="contact-form-footer">
-              <button type="submit" className="contact-submit" aria-label={t('contact.submitAria')}>
+              <button type="submit" className="contact-submit" aria-label={t('contact.submitAria')} disabled={!privacyChecked}
+                style={{ opacity: privacyChecked ? 1 : 0.45, cursor: privacyChecked ? 'pointer' : 'not-allowed' }}>
                 {t('contact.submit')} <span aria-hidden>→</span>
               </button>
             </div>
-            <p className="contact-privacy-note">
-              {t('contact.formPrivacy')}{' '}
-              <Link to="/datenschutz" className="contact-privacy-link">
-                {t('contact.formPrivacyLink')}
-              </Link>
-              .
-            </p>
           </form>
         </section>
       </main>

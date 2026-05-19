@@ -155,11 +155,18 @@ export default function Nav() {
 
         <AnimatePresence>
           {menuOpen && (
+            <>
+              {/* Backdrop — closes menu when tapping outside */}
+              <div
+                onClick={() => setMenuOpen(false)}
+                style={{ position: 'fixed', inset: 0, zIndex: 998 }}
+              />
             <motion.div
               initial={{ opacity: 0, y: -8, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.97 }}
               transition={{ duration: 0.2 }}
+              onClick={e => e.stopPropagation()}
               style={{
                 position: 'fixed', top: 80, left: 12, right: 12, zIndex: 999,
                 background: DARK_PILL,
@@ -178,7 +185,9 @@ export default function Nav() {
                 borderBottom: '1px solid rgba(255,255,255,0.06)',
               }}>
                 <HomeIcon />
-                <span style={{ fontSize: 15, fontWeight: 500, color: 'rgba(255,255,255,0.85)', letterSpacing: '-0.01em' }}>Home</span>
+                <span style={{ fontSize: 15, fontWeight: 500, color: 'rgba(255,255,255,0.85)', letterSpacing: '-0.01em' }}>
+                  {lang === 'de' ? 'Startseite' : 'Home'}
+                </span>
               </Link>
               {NAV_LINKS.map(({ key, to }) => {
                 const active = navLinkIsActive(to, pathname)
@@ -202,6 +211,7 @@ export default function Nav() {
                 )
               })}
             </motion.div>
+            </>
           )}
         </AnimatePresence>
       </>

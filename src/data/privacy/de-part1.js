@@ -24,7 +24,7 @@ export const privacySectionsDePart1 = [
       {
         type: 'p',
         text:
-          '(2) Verantwortlicher im Sinne von Art. 4 Abs. 7 EU-Datenschutz-Grundverordnung (DSGVO) ist Suhaili Security, Berlin, Deutschland, erreichbar unter info@suhaili-security.de. Das vollständige Impressum finden Sie auf dieser Website unter „Impressum“. Zum Thema Datenschutz erreichen Sie uns unter derselben Postanschrift mit dem Zusatz „An den Datenschutzbeauftragten“ (bzw. der bei uns hinterlegten deutschen Bezeichnung).',
+          '(2) Verantwortlicher im Sinne von Art. 4 Abs. 7 EU-Datenschutz-Grundverordnung (DSGVO) ist Suhaili Security, Berlin, Deutschland, erreichbar unter Security@suhaili.de. Das vollständige Impressum finden Sie auf dieser Website unter „Impressum“. Zum Thema Datenschutz erreichen Sie uns unter derselben Postanschrift mit dem Zusatz „An den Datenschutzbeauftragten“ (bzw. der bei uns hinterlegten deutschen Bezeichnung).',
       },
       {
         type: 'p',
@@ -172,7 +172,7 @@ export const privacySectionsDePart1 = [
       {
         type: 'p',
         text:
-          '(3) Selbstverständlich können Sie der Verarbeitung Ihrer personenbezogenen Daten für Zwecke der Werbung und Datenanalyse jederzeit widersprechen. Über Ihren Werbewiderspruch können Sie uns unter folgenden Kontaktdaten informieren: per E-Mail an info@suhaili-security.de, telefonisch unter den im Impressum angegebenen Rufnummern oder postalisch an Suhaili Security, Berlin, Deutschland.',
+          '(3) Selbstverständlich können Sie der Verarbeitung Ihrer personenbezogenen Daten für Zwecke der Werbung und Datenanalyse jederzeit widersprechen. Über Ihren Werbewiderspruch können Sie uns unter folgenden Kontaktdaten informieren: per E-Mail an Security@suhaili.de, telefonisch unter den im Impressum angegebenen Rufnummern oder postalisch an Suhaili Security, Berlin, Deutschland.',
       },
     ],
   },

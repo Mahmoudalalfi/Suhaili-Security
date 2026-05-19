@@ -227,24 +227,24 @@ function FlickerGrid({ width = 44, height = 44, x = -1, y = -1 }) {
 /* ─────────────── Services ─────────────── */
 const CAROUSEL_SERVICES = {
   de: [
+    { icon: <ShieldIcon />,     title: 'Sicherheitsdienst',    desc: 'Zuverlässige Sicherheitslösungen für Objekte, Unternehmen und Veranstaltungen.' },
+    { icon: <BuildingIcon />,   title: 'Objektschutz',         desc: 'Schutz und Überwachung Ihres Objekts durch geschultes Personal – diskret, aufmerksam und professionell.' },
+    { icon: <DeskIcon />,       title: 'Facility Management',  desc: 'Koordination und Verwaltung Ihrer Liegenschaft für einen reibungslosen Alltag.' },
     { icon: <CctvIcon />,       title: 'CCTV Überwachung',     desc: 'Modernste Videoüberwachung für Gebäude und Außenbereiche.' },
-    { icon: <ShieldIcon />,     title: 'Objektschutz',         desc: 'Schutz von Gebäuden, Lagern und Anlagen rund um die Uhr.' },
     { icon: <UserShieldIcon />, title: 'VIP-Schutz',           desc: 'Diskreter Personenschutz für Führungskräfte und Privatpersonen.' },
     { icon: <EventIcon />,      title: 'Veranstaltungsschutz', desc: 'Professionelle Sicherheit für Events, Messen und Konzerte.' },
-    { icon: <PatrolIcon />,     title: 'Streifendienst',       desc: 'Regelmäßige Kontrollgänge und mobile Einsatzbereitschaft.' },
-    { icon: <BuildingIcon />,   title: 'Werkschutz',           desc: 'Industrieschutz für Produktionsanlagen und Werksgelände.' },
-    { icon: <DeskIcon />,       title: 'Empfangsdienst',       desc: 'Professioneller Empfang und Zugangskontrolle.' },
-    { icon: <ShieldIcon />,     title: 'Sicherheitsdienst',    desc: 'Allgemeine Sicherheitslösungen für Unternehmen und Privatkunden.' },
+    { icon: <PatrolIcon />,     title: 'Hausmeisterservice',   desc: 'Wartung, Überwachung und Betreuung von Gebäuden und Außenanlagen.' },
+    { icon: <BuildingIcon />,   title: 'Streifendienst',       desc: 'Regelmäßige Kontrollgänge und mobile Einsatzbereitschaft.' },
   ],
   en: [
-    { icon: <CctvIcon />,       title: 'CCTV SURVEILLANCE',    desc: 'Modern video surveillance for buildings and outdoor areas.' },
-    { icon: <ShieldIcon />,     title: 'OBJECT PROTECTION',    desc: 'Protection of buildings, warehouses and facilities around the clock.' },
-    { icon: <UserShieldIcon />, title: 'VIP SECURITY',         desc: 'Discreet personal protection for executives and private clients.' },
-    { icon: <EventIcon />,      title: 'EVENT SECURITY',       desc: 'Professional security for events, trade fairs and concerts.' },
-    { icon: <PatrolIcon />,     title: 'PATROL SERVICE',       desc: 'Regular inspection rounds and mobile rapid response.' },
-    { icon: <BuildingIcon />,   title: 'INDUSTRIAL SECURITY',  desc: 'Industrial protection for production facilities and factory grounds.' },
-    { icon: <DeskIcon />,       title: 'RECEPTION SERVICE',    desc: 'Professional reception management and access control.' },
-    { icon: <ShieldIcon />,     title: 'SECURITY SERVICE',     desc: 'General security solutions for businesses and private clients.' },
+    { icon: <ShieldIcon />,     title: 'Security Services',    desc: 'Reliable security solutions for properties, businesses, and events.' },
+    { icon: <BuildingIcon />,   title: 'Property Protection',  desc: 'Protection and supervision of your property by trained staff – discreet, attentive, and professional.' },
+    { icon: <DeskIcon />,       title: 'Facility Management',  desc: 'Coordination and management of your property for smooth day-to-day operations.' },
+    { icon: <CctvIcon />,       title: 'CCTV Surveillance',    desc: 'Modern video surveillance for buildings and outdoor areas.' },
+    { icon: <UserShieldIcon />, title: 'VIP Security',         desc: 'Discreet personal protection for executives and private clients.' },
+    { icon: <EventIcon />,      title: 'Event Security',       desc: 'Professional security for events, trade fairs and concerts.' },
+    { icon: <PatrolIcon />,     title: 'Caretaking Service',   desc: 'Maintenance, monitoring, and support services for buildings and outdoor facilities.' },
+    { icon: <BuildingIcon />,   title: 'Patrol Service',       desc: 'Regular inspection rounds and mobile rapid response.' },
   ],
 }
 
@@ -306,9 +306,9 @@ function ServiceCard2({ icon, title, desc }) {
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       style={{
-        flexShrink: 0,
-        width: 'clamp(220px, 22vw, 280px)',
-        height: 180,
+        width: '100%',
+        height: 'auto',
+        minHeight: 160,
         background: '#0f0f0f',
         border: '1px solid rgba(255,255,255,0.07)',
         borderRadius: 16,
@@ -346,37 +346,28 @@ function ServiceCard2({ icon, title, desc }) {
   )
 }
 
-/* ─────────────── Ticker ─────────────── */
-function Ticker() {
-  const { t } = useLanguage()
-  const words = t('home.ticker')
-  const items = [...words, ...words]
+/* ─────────────── Static 2×4 Service Grid ─────────────── */
+function ServiceGridTicker({ lang }) {
+  const services = CAROUSEL_SERVICES[lang] ?? CAROUSEL_SERVICES.de
+
   return (
     <div style={{
-      overflow: 'hidden',
-      background: 'var(--bg-card)',
-      borderTop: '1px solid var(--border)',
-      borderBottom: '1px solid var(--border)',
-      padding: '16px 0',
-      userSelect: 'none',
+      background: '#060606',
+      borderTop: '1px solid rgba(255,255,255,0.05)',
+      borderBottom: '1px solid rgba(255,255,255,0.05)',
+      padding: 'clamp(28px, 4vw, 48px) clamp(20px, 5vw, 60px)',
     }}>
-      <div className="ticker-track">
-        {items.map((w, i) => (
-          <span
-            key={i}
-            style={{
-              display: 'inline-flex', alignItems: 'center',
-              fontFamily: 'var(--font-display)',
-              fontWeight: 700, fontSize: 13,
-              letterSpacing: '0.12em', textTransform: 'uppercase',
-              color: 'var(--muted)', padding: '0 24px',
-            }}
-          >
-            {w}
-            <span style={{ marginLeft: 24, color: 'var(--red)', opacity: 0.6 }}>✦</span>
-          </span>
-        ))}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gridTemplateRows: 'repeat(2, auto)',
+        gap: 16,
+      }} className="svc-static-grid">
+        {services.map((s, i) => <ServiceCard2 key={i} icon={s.icon} title={s.title} desc={s.desc} />)}
       </div>
+      <style>{`
+        @media (max-width: 960px) { .svc-static-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+      `}</style>
     </div>
   )
 }
@@ -658,7 +649,7 @@ function ServicesShowcase({ lang }) {
           fontSize: 'clamp(28px,4vw,52px)', letterSpacing: '-0.03em',
           lineHeight: 1.05, textTransform: 'uppercase', color: '#fff',
         }}>
-          {lang === 'de' ? <>Leistungen, die<br />überzeugen</> : <>Services that<br />Convince</>}
+          {lang === 'de' ? <>Ausgewählte Projekte<br />& Referenzen</> : <>Selected Projects<br />& References</>}
         </h2>
         <Link
           to="/services"
@@ -685,7 +676,6 @@ function ServicesShowcase({ lang }) {
 /* ─────────────── HomePage ─────────────── */
 export default function HomePage() {
   const { t, lang } = useLanguage()
-  const darkCtaRef  = useRef(null)
   const heroRef     = useRef(null)
   const contentRef  = useRef(null)
   const mvRefs      = useRef([])
@@ -740,18 +730,6 @@ export default function HomePage() {
     ? ['Objektschutz', 'VIP-Schutz', 'Veranstaltungen', 'Werkschutz', 'Streifendienst']
     : ['Object Protection', 'VIP Security', 'Event Security', 'Industrial Guard', 'Patrol Service']
 
-  /* Dark CTA stagger reveal */
-  useEffect(() => {
-    if (!darkCtaRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo(darkCtaRef.current.querySelectorAll('.cta-line'),
-        { opacity: 0, x: -40 },
-        { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12,
-          scrollTrigger: { trigger: darkCtaRef.current, start: 'top 80%', once: true } }
-      )
-    })
-    return () => ctx.revert()
-  }, [])
 
   return (
     <div>
@@ -855,11 +833,11 @@ export default function HomePage() {
               textTransform: 'uppercase',
               color: '#c0392b',
             }}>
-              {lang === 'de' ? 'Professioneller Schutz' : 'Professional Security'}
+              {lang === 'de' ? 'Professioneller Sicherheitsdienst — Berlin' : 'Professional Security Service — Berlin'}
             </span>
           </motion.div>
 
-          {/* "Your Partner for" */}
+          {/* "Your reliable partner for" */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -877,7 +855,7 @@ export default function HomePage() {
               whiteSpace: 'nowrap',
             }}
           >
-            {lang === 'de' ? 'Ihr Partner für' : 'Your Partner for'}
+            {lang === 'de' ? 'Ihr zuverlässiger Partner für' : 'Your Reliable Partner for'}
           </motion.div>
 
           {/* Rotating text — single line, never wraps */}
@@ -1049,11 +1027,8 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* ════ TICKER ════ */}
-      <Ticker />
-
-      {/* ════ SERVICES CAROUSEL ════ */}
-      <ServicesCarousel lang={lang} />
+      {/* ════ SERVICE GRID TICKER ════ */}
+      <ServiceGridTicker lang={lang} />
 
       {/* ════ SERVICES SHOWCASE ════ */}
       <ServicesShowcase lang={lang} />
@@ -1061,79 +1036,8 @@ export default function HomePage() {
       {/* ════ TESTIMONIALS ════ */}
       <Testimonials lang={lang} />
 
-      {/* ════ DARK CTA ════ */}
-      <section
-        ref={darkCtaRef}
-        style={{
-          background: '#000',
-          padding: 'clamp(80px, 14vw, 140px) clamp(16px, 4vw, 48px) clamp(80px, 14vw, 140px) clamp(16px, 3vw, 40px)',
-          borderTop: '1px solid var(--border)',
-          overflow: 'hidden',
-        }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
-          <div>
-            {[t('home.cta1'), t('home.cta2'), t('home.cta3')].map((line, i) => (
-              <div
-                key={i}
-                className="cta-line"
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 900,
-                  fontSize: 'clamp(52px, 10vw, 148px)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '-0.01em',
-                  lineHeight: 0.9,
-                  color: i === 2 ? 'var(--red-light)' : '#fff',
-                  display: 'block',
-                  marginBottom: i < 2 ? '0.06em' : 0,
-                }}
-              >
-                {line}
-              </div>
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-            <a
-              href={`mailto:${t('home.ctaEmail')}`}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '10px 20px',
-                background: 'transparent',
-                color: 'rgba(255,255,255,0.72)',
-                fontSize: 14, fontWeight: 500, letterSpacing: '0.02em',
-                border: '1px solid rgba(255,255,255,0.18)',
-                borderRadius: 999, textDecoration: 'none',
-                transition: 'color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = '#fff'
-                e.currentTarget.style.borderColor = 'rgba(192,57,43,0.55)'
-                e.currentTarget.style.boxShadow = '0 0 24px rgba(192,57,43,0.12)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = 'rgba(255,255,255,0.72)'
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'
-                e.currentTarget.style.boxShadow = 'none'
-              }}
-            >
-              {t('home.ctaEmail')} ↗
-            </a>
-          </div>
-        </div>
-      </section>
 
       <style>{`
-        @keyframes scroll-right {
-          from { transform: translateX(-50%); }
-          to   { transform: translateX(0); }
-        }
-        .svc-track-right {
-          animation: scroll-right 32s linear infinite;
-        }
-        .svc-track-right:hover {
-          animation-play-state: paused;
-        }
       `}</style>
     </div>
   )

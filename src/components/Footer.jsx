@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
+import LiquidButton from './ui/LiquidButton'
 const logo = 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
 
 const LINKS = {
@@ -46,12 +47,14 @@ const SERVICES = {
 
 const LEGAL = {
   de: [
-    { label: 'Impressum',   to: '/impressum' },
-    { label: 'Datenschutz', to: '/datenschutz' },
+    { label: 'Impressum',            to: '/impressum' },
+    { label: 'Datenschutz',          to: '/datenschutz' },
+    { label: 'Cookie-Einstellungen', to: '/datenschutz' },
   ],
   en: [
     { label: 'Imprint',          to: '/impressum' },
     { label: 'Data protection',  to: '/datenschutz' },
+    { label: 'Cookie Settings',  to: '/datenschutz' },
   ],
 }
 
@@ -63,6 +66,45 @@ export default function Footer() {
 
   return (
     <footer style={{ background: '#000000', fontFamily: 'var(--font-body)', color: '#fff' }}>
+
+      {/* CTA strip */}
+      <div style={{
+        borderBottom: '1px solid rgba(255,255,255,0.07)',
+        padding: 'clamp(40px, 7vw, 72px) clamp(20px, 5vw, 40px)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 28,
+      }}>
+        <div>
+          <p style={{ margin: '0 0 6px', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#c0392b', fontFamily: 'var(--font-display)' }}>
+            {lang === 'de' ? 'Jetzt handeln' : 'Take Action'}
+          </p>
+          <h2 style={{
+            margin: 0,
+            fontFamily: 'var(--font-display)', fontWeight: 900,
+            fontSize: 'clamp(32px, 6vw, 72px)',
+            letterSpacing: '-0.03em', lineHeight: 0.95,
+            textTransform: 'uppercase', color: '#fff',
+          }}>
+            {lang === 'de' ? <>SICHERN SIE<br />IHR UNTERNEHMEN<br /><span style={{ color: '#c0392b' }}>JETZT.</span></> : <>PROTECT YOUR<br />BUSINESS<br /><span style={{ color: '#c0392b' }}>NOW.</span></>}
+          </h2>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
+          <LiquidButton
+            as={Link} to="/contact"
+            tint="rgba(192,57,43,0.9)" textColor="#fff"
+            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, letterSpacing: '0.08em', textTransform: 'uppercase' }}
+          >
+            {lang === 'de' ? 'Jetzt Angebot anfordern' : 'Request a Quote Now'} →
+          </LiquidButton>
+          <LiquidButton
+            as={Link} to="/services"
+            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, letterSpacing: '0.08em', textTransform: 'uppercase' }}
+          >
+            {lang === 'de' ? 'Leistungen ansehen' : 'View Services'}
+          </LiquidButton>
+        </div>
+      </div>
 
       {/* Main grid */}
       <div style={{
@@ -98,10 +140,7 @@ export default function Footer() {
                 ? 'Professionelle Sicherheitslösungen für Unternehmen und Privatkunden in Deutschland.'
                 : 'Professional security solutions for businesses and private clients across Germany.'}
             </p>
-            {[
-              'info@suhaili.de',
-              'contact@suhaili.de',
-            ].map((addr, i) => (
+            {['Security@suhaili.de', 'Info.Security@suhaili.de', 'Kontakt.Security@suhaili.de'].map((addr, i) => (
               <a
                 key={addr}
                 href={`mailto:${addr}`}

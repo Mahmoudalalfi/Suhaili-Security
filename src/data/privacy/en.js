@@ -27,7 +27,7 @@ export const privacySectionsEn = [
       {
         type: 'p',
         text:
-          '(2) The controller as defined by Article 4(7) EU General Data Protection Regulation (GDPR) is Suhaili Security, Berlin, Germany, available by e-mail at info@suhaili-security.de. The company imprint can be found in full on this website under Imprint. You may contact us regarding data protection at the same postal address with the addition “To the data protection officer” (or the German equivalent on file with us).',
+          '(2) The controller as defined by Article 4(7) EU General Data Protection Regulation (GDPR) is Suhaili Security, Berlin, Germany, available by e-mail at Security@suhaili.de. The company imprint can be found in full on this website under Imprint. You may contact us regarding data protection at the same postal address with the addition “To the data protection officer” (or the German equivalent on file with us).',
       },
       {
         type: 'p',
@@ -174,7 +174,7 @@ export const privacySectionsEn = [
       {
         type: 'p',
         text:
-          '(3) You can, of course, object to the processing of your personal data for the purposes of advertising and data analysis at any time. You can inform us of your objection in relation to advertising using the following contact details: by e-mail to info@suhaili-security.de, by telephone at the numbers stated in the imprint, or by post to Suhaili Security, Berlin, Germany.',
+          '(3) You can, of course, object to the processing of your personal data for the purposes of advertising and data analysis at any time. You can inform us of your objection in relation to advertising using the following contact details: by e-mail to Security@suhaili.de, by telephone at the numbers stated in the imprint, or by post to Suhaili Security, Berlin, Germany.',
       },
     ],
   },
