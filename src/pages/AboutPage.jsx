@@ -229,63 +229,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Stats ── */}
-      <section style={{
-        background: 'linear-gradient(180deg, #101010 0%, #070707 100%)',
-        borderTop: '1px solid rgba(231,76,60,0.22)',
-        borderBottom: '1px solid var(--border-lt)',
-        padding: 'clamp(64px, 9vw, 96px) clamp(24px, 5vw, 40px)',
-        position: 'relative',
-      }}>
-        <div aria-hidden style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: 2,
-          background: 'linear-gradient(90deg, transparent 0%, rgba(231,76,60,0.85) 22%, rgba(231,76,60,0.35) 55%, transparent 100%)',
-          pointerEvents: 'none',
-        }} />
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          {t('about.statsTitle') && (
-            <RevealBlock>
-              <p style={{
-                fontSize: 'clamp(11px, 1.2vw, 13px)',
-                fontWeight: 700,
-                letterSpacing: '0.12em',
-                color: 'var(--red-light)',
-                textTransform: 'uppercase',
-                margin: '0 0 48px',
-              }}>
-                {t('about.statsTitle')}
-              </p>
-            </RevealBlock>
-          )}
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-            gap: 'clamp(32px, 5vw, 56px)',
-          }}>
-            {stats.map((s, i) => (
-              <RevealBlock key={i} delay={i * 0.07}>
-                <CounterStat s={s} delay={i * 0.12} />
-              </RevealBlock>
-            ))}
-          </div>
-
-          {t('about.statsBody') && (
-            <RevealBlock delay={0.25}>
-              <p style={{
-                fontSize: 'clamp(15px, 1.7vw, 18px)',
-                color: 'var(--silver)',
-                lineHeight: 1.75,
-                maxWidth: 720,
-                margin: 'clamp(40px, 6vw, 64px) 0 0',
-                letterSpacing: '-0.015em',
-              }}>
-                {t('about.statsBody')}
-              </p>
-            </RevealBlock>
-          )}
-        </div>
-      </section>
 
       {/* ── Solutions two-col ── */}
       {(t('about.solutionsTitle') || t('about.solutionsDesc')) && (
