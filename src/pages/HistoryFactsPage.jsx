@@ -231,27 +231,6 @@ export default function HistoryFactsPage() {
         </div>
       </section>
 
-      <section style={{ background: 'linear-gradient(180deg, #101010 0%, #070707 100%)', borderTop: '1px solid rgba(192,57,43,0.22)', padding: 'clamp(64px, 9vw, 96px) clamp(24px, 5vw, 40px)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          {t('about.statsTitle') && (
-            <RevealBlock>
-              <p style={{ fontSize: 'clamp(11px, 1.2vw, 13px)', fontWeight: 700, letterSpacing: '0.12em', color: RED, textTransform: 'uppercase', margin: '0 0 48px' }}>
-                {t('about.statsTitle')}
-              </p>
-            </RevealBlock>
-          )}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'clamp(32px, 5vw, 56px)' }}>
-            {stats.map((s, i) => (
-              <RevealBlock key={i} delay={i * 0.06}>
-                <div style={{ borderTop: '2px solid rgba(192,57,43,0.4)', paddingTop: 22 }}>
-                  <p style={{ fontSize: 'clamp(36px, 4.2vw, 52px)', fontWeight: 700, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1, margin: '0 0 12px' }}>{s.num}</p>
-                  <p style={{ fontSize: 13, color: MUTED, letterSpacing: '0.01em', lineHeight: 1.45, margin: 0 }}>{s.label}</p>
-                </div>
-              </RevealBlock>
-            ))}
-          </div>
-        </div>
-      </section>
 
     </div>
   )
