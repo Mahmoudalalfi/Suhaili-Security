@@ -2,6 +2,12 @@ import { useEffect, useRef, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { useLanguage } from '../i18n/LanguageContext'
+import emailjs from '@emailjs/browser'
+
+const EMAILJS_SERVICE_ID = 'service_1fpobdj'
+const EMAILJS_TEMPLATE_ID = 'template_zq59bre'
+const EMAILJS_AUTOREPLY_TEMPLATE_ID = 'template_br8q3v1'
+const EMAILJS_PUBLIC_KEY = 'BIboUB7JYHd_Oq1GN'
 
 function FieldIcon({ type }) {
   const box = {
@@ -70,6 +76,7 @@ export default function ContactPage() {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [privacyChecked, setPrivacyChecked] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null) // null | 'sending' | 'success' | 'error'
 
   const mailTo = t('imprint.email')
   const addressBlock = useMemo(
@@ -103,13 +110,28 @@ export default function ContactPage() {
     return () => ctx.revert()
   }, [lang])
 
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault()
-    const subject = encodeURIComponent(`${t('contact.mailSubjectPrefix')} — ${name || '—'}`)
-    const body = encodeURIComponent(
-      `${message}\n\n—\n${t('contact.nameLabel')}: ${name}\n${t('contact.emailLabel')}: ${email}`,
-    )
-    window.location.href = `mailto:${mailTo}?subject=${subject}&body=${body}`
+    if (!privacyChecked) return
+    setSubmitStatus('sending')
+    try {
+      const params = {
+        name,
+        email,
+        message,
+        title: `${t('contact.mailSubjectPrefix')} — ${name}`,
+        time: new Date().toLocaleString(),
+      }
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params, EMAILJS_PUBLIC_KEY)
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_AUTOREPLY_TEMPLATE_ID, params, EMAILJS_PUBLIC_KEY)
+      setSubmitStatus('success')
+      setName('')
+      setEmail('')
+      setMessage('')
+      setPrivacyChecked(false)
+    } catch {
+      setSubmitStatus('error')
+    }
   }
 
   const req = (
@@ -284,6 +306,41 @@ export default function ContactPage() {
 
         <section className="contact-panel contact-form-panel">
           <h2 className="contact-section-label">{t('contact.formTitle')}</h2>
+
+          {submitStatus === 'success' && (
+            <div className="contact-success-box">
+              <div className="contact-success-icon" aria-hidden>✓</div>
+              <p className="contact-success-title">
+                {lang === 'de' ? 'Nachricht erhalten!' : 'Message Received!'}
+              </p>
+              <p className="contact-success-body">
+                {lang === 'de'
+                  ? 'Wir haben Ihre Nachricht erhalten und melden uns in der Regel innerhalb eines Werktages.'
+                  : 'We have received your message and will get back to you shortly — usually within one business day.'}
+              </p>
+              <button className="contact-submit" style={{ marginTop: 20 }} onClick={() => setSubmitStatus(null)}>
+                {lang === 'de' ? 'Neue Nachricht' : 'Send Another'} →
+              </button>
+            </div>
+          )}
+
+          {submitStatus === 'error' && (
+            <div className="contact-error-box">
+              <p className="contact-error-title">
+                {lang === 'de' ? 'Fehler beim Senden' : 'Failed to send'}
+              </p>
+              <p className="contact-error-body">
+                {lang === 'de'
+                  ? 'Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt per E-Mail.'
+                  : 'Please try again or reach us directly by email.'}
+              </p>
+              <button className="contact-submit" style={{ marginTop: 16 }} onClick={() => setSubmitStatus(null)}>
+                {lang === 'de' ? 'Erneut versuchen' : 'Try Again'} →
+              </button>
+            </div>
+          )}
+
+          {(submitStatus === null || submitStatus === 'sending') && (
           <form className="contact-form" onSubmit={submitForm} noValidate>
             <label className="contact-label contact-label--fixed">
               {t('contact.nameLabel')} {req}
@@ -340,12 +397,24 @@ export default function ContactPage() {
               </span>
             </label>
             <div className="contact-form-footer">
-              <button type="submit" className="contact-submit" aria-label={t('contact.submitAria')} disabled={!privacyChecked}
-                style={{ opacity: privacyChecked ? 1 : 0.45, cursor: privacyChecked ? 'pointer' : 'not-allowed' }}>
-                {t('contact.submit')} <span aria-hidden>→</span>
+              <button
+                type="submit"
+                className="contact-submit"
+                aria-label={t('contact.submitAria')}
+                disabled={!privacyChecked || submitStatus === 'sending'}
+                style={{
+                  opacity: privacyChecked && submitStatus !== 'sending' ? 1 : 0.45,
+                  cursor: privacyChecked && submitStatus !== 'sending' ? 'pointer' : 'not-allowed',
+                }}
+              >
+                {submitStatus === 'sending'
+                  ? (lang === 'de' ? 'Wird gesendet…' : 'Sending…')
+                  : <>{t('contact.submit')} <span aria-hidden>→</span></>
+                }
               </button>
             </div>
           </form>
+          )}
         </section>
       </main>
 
@@ -473,6 +542,64 @@ export default function ContactPage() {
         .contact-submit:hover { opacity: 0.88; transform: translateY(-1px); }
         .contact-privacy-note { margin: 8px 0 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
         .contact-privacy-link { color: var(--red-light); text-decoration: underline; text-underline-offset: 3px; }
+        .contact-success-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 40px 24px;
+          border-radius: 12px;
+          border: 1px solid rgba(204,0,0,0.25);
+          background: rgba(204,0,0,0.05);
+        }
+        .contact-success-icon {
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, var(--red-light), var(--red));
+          color: #fff;
+          font-size: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 18px;
+        }
+        .contact-success-title {
+          margin: 0 0 10px;
+          font-size: 20px;
+          font-weight: 700;
+          color: #fff;
+          letter-spacing: -0.01em;
+        }
+        .contact-success-body {
+          margin: 0;
+          font-size: 14px;
+          line-height: 1.65;
+          color: var(--muted);
+          max-width: 340px;
+        }
+        .contact-error-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 32px 24px;
+          border-radius: 12px;
+          border: 1px solid rgba(255,80,80,0.2);
+          background: rgba(255,50,50,0.04);
+        }
+        .contact-error-title {
+          margin: 0 0 8px;
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--red-light);
+        }
+        .contact-error-body {
+          margin: 0;
+          font-size: 13px;
+          line-height: 1.6;
+          color: var(--muted);
+        }
         @media (max-width: 820px) {
           .contact-grid { grid-template-columns: 1fr !important; }
           .contact-textarea { min-height: 140px; }
