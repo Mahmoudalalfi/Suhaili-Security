@@ -139,7 +139,7 @@ export default function ImprintPage() {
 
   const cardImgPosition = ['50% 42%', '50% 48%', '50% 40%']
 
-  const CDN = 'https://res.cloudinary.com/dfc0qnh88/image/upload'
+  const CDN = 'https://res.cloudinary.com/df7obwqcy/image/upload'
   const cards = [
     { key: 'imprint.card1', src: `${CDN}/v1777655766/card-professional_rniqlc.png` },
     { key: 'imprint.card2', src: `${CDN}/v1777655766/card-discreet_t2owxi.png` },

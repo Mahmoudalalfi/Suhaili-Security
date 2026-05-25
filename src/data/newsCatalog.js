@@ -1,4 +1,4 @@
-const CDN = 'https://res.cloudinary.com/dfc0qnh88/image/upload'
+const CDN = 'https://res.cloudinary.com/df7obwqcy/image/upload'
 
 export const NEWS_ORDER = ['n1', 'n2', 'n3', 'n4', 'n5', 'n6']
 

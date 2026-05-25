@@ -39,8 +39,8 @@ export default function AssociationWorkPage() {
     gsap.fromTo(headRef.current, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', delay: 0.04 })
   }, [])
 
-  const heroImg = t('associationWorkPage.heroImage') || 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777490344/suhail-services/association-work-hero.png'
-  const engagementImg = t('associationWorkPage.engagementImage') || 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777490341/suhail-services/association-work-engagement.png'
+  const heroImg = t('associationWorkPage.heroImage') || 'https://res.cloudinary.com/df7obwqcy/image/upload/v1779714156/suhail-security/association-work-hero.png'
+  const engagementImg = t('associationWorkPage.engagementImage') || 'https://res.cloudinary.com/df7obwqcy/image/upload/v1779714161/suhail-security/association-work-engagement.png'
   const internationalItems = Array.isArray(t('associationWorkPage.internationalItems')) ? t('associationWorkPage.internationalItems') : []
   const nationalLines = Array.isArray(t('associationWorkPage.nationalLines')) ? t('associationWorkPage.nationalLines') : []
 

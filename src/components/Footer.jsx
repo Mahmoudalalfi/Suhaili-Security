@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import LiquidButton from './ui/LiquidButton'
-const logo = 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
+const logo = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
 
 const LINKS = {
   de: [

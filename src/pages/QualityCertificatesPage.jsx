@@ -65,7 +65,7 @@ export default function QualityCertificatesPage() {
   }, [])
 
   const pillarsTop = Array.isArray(t('qualityPage.pillarsTop')) ? t('qualityPage.pillarsTop') : []
-  const heroImg = t('qualityPage.heroImage') || 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777490771/suhail-services/quality-hero-certified.png'
+  const heroImg = t('qualityPage.heroImage') || 'https://res.cloudinary.com/df7obwqcy/image/upload/v1779714125/suhail-security/quality-hero-certified.png'
 
   return (
     <div style={{ background: 'var(--bg)', color: 'var(--silver-lt)' }}>

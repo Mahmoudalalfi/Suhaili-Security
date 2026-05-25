@@ -1,4 +1,4 @@
-const CDN = 'https://res.cloudinary.com/dfc0qnh88/image/upload'
+const CDN = 'https://res.cloudinary.com/df7obwqcy/image/upload'
 
 export const GALLERY_ITEMS = [
   { id: 'g1',  image: `${CDN}/v1777671139/Mascot4_xccqdp.png`,                    span: 8 },

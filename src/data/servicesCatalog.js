@@ -1,4 +1,4 @@
-const CDN = 'https://res.cloudinary.com/dfc0qnh88/image/upload'
+const CDN = 'https://res.cloudinary.com/df7obwqcy/image/upload'
 
 /** Canonical order of services */
 export const SERVICES_ORDER = [

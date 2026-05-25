@@ -53,7 +53,7 @@ export default function PhilosophyCodePage() {
   }, [])
 
   const pillars = Array.isArray(t('philosophyPage.pillars')) ? t('philosophyPage.pillars') : []
-  const heroImg = t('philosophyPage.heroImage') || 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777490768/suhail-services/philosophy-hero-collaboration.png'
+  const heroImg = t('philosophyPage.heroImage') || 'https://res.cloudinary.com/df7obwqcy/image/upload/v1779714146/suhail-security/philosophy-hero-collaboration.png'
   const pdfHref = t('philosophyPage.codePdfHref') || ''
 
   return (

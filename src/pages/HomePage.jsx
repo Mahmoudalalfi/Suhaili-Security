@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { useLanguage } from '../i18n/LanguageContext'
 import { TextRotate } from '../components/ui/text-rotate'
 import LiquidButton from '../components/ui/LiquidButton'
-const logo = 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
+const logo = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
 import { SERVICE_HERO_BY_ID, SERVICES_ORDER } from '../data/servicesCatalog'
 import SERVICES_I18N from '../data/servicesPageI18n'
 
@@ -97,8 +97,8 @@ function GyroTiltCard({ children, style = {} }) {
 
 /* ─────────────── Hero ping-pong video ─────────────── */
 const HERO_SRCS = [
-  'https://res.cloudinary.com/dfc0qnh88/video/upload/v1777655195/Hero_kwsbzw.mp4',
-  'https://res.cloudinary.com/dfc0qnh88/video/upload/v1777655191/HeroRev_rhnvyd.mp4',
+  'https://res.cloudinary.com/df7obwqcy/video/upload/v1777655195/Hero_kwsbzw.mp4',
+  'https://res.cloudinary.com/df7obwqcy/video/upload/v1777655191/HeroRev_rhnvyd.mp4',
 ]
 
 const VIDEO_STYLE = {

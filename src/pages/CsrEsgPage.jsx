@@ -150,8 +150,8 @@ export default function CsrEsgPage() {
 
   const economicBullets = Array.isArray(t('csrPage.economicBullets')) ? t('csrPage.economicBullets') : []
   const ecologicalBullets = Array.isArray(t('csrPage.ecologicalBullets')) ? t('csrPage.ecologicalBullets') : []
-  const heroImg = t('csrPage.heroImage') || 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777490363/suhail-services/csr-hero-forest.png'
-  const ecoImg = t('csrPage.ecologicalImage') || 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777490351/suhail-services/csr-ecological-photo.png'
+  const heroImg = t('csrPage.heroImage') || 'https://res.cloudinary.com/df7obwqcy/image/upload/v1779714135/suhail-security/csr-hero-forest.png'
+  const ecoImg = t('csrPage.ecologicalImage') || 'https://res.cloudinary.com/df7obwqcy/image/upload/v1779714140/suhail-security/csr-ecological-photo.png'
   const contactLabel = t('csrPage.reportLinkContactLabel')
   const contactHref = t('csrPage.reportLinkContactHref')
 

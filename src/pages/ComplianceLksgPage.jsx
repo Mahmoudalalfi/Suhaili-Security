@@ -46,7 +46,7 @@ export default function ComplianceLksgPage() {
     gsap.fromTo(headRef.current, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', delay: 0.04 })
   }, [])
 
-  const heroImg = t('complianceLksgPage.heroImage') || 'https://res.cloudinary.com/dfc0qnh88/image/upload/v1777490347/suhail-services/compliance-hero-integrity.png'
+  const heroImg = t('complianceLksgPage.heroImage') || 'https://res.cloudinary.com/df7obwqcy/image/upload/v1779714151/suhail-security/compliance-hero-integrity.png'
 
   const sections = [
     { bg: 'var(--bg-2)', heading: 'complianceLksgPage.splitComplianceHeading', body: 'complianceLksgPage.splitComplianceBody' },

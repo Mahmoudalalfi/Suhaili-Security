@@ -6,7 +6,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const CDN = 'https://res.cloudinary.com/dfc0qnh88/image/upload'
+const CDN = 'https://res.cloudinary.com/df7obwqcy/image/upload'
 
 const PROJECT_ITEMS = [
   { id: 'p1', image: `${CDN}/v1777671139/Mascot4_xccqdp.png` },
