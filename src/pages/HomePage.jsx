@@ -97,8 +97,8 @@ function GyroTiltCard({ children, style = {} }) {
 
 /* ─────────────── Hero ping-pong video ─────────────── */
 const HERO_SRCS = [
-  'https://res.cloudinary.com/df7obwqcy/video/upload/v1777655195/Hero_kwsbzw.mp4',
-  'https://res.cloudinary.com/df7obwqcy/video/upload/v1777655191/HeroRev_rhnvyd.mp4',
+  'https://res.cloudinary.com/df7obwqcy/video/upload/v1781797619/HeroRev_rhnvyd_ygehpw.mp4',
+  'https://res.cloudinary.com/df7obwqcy/video/upload/v1781797619/HeroRev_rhnvyd_ygehpw.mp4',
 ]
 
 const VIDEO_STYLE = {
