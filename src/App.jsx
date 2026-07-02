@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import CookieBanner from './components/CookieBanner'
+import BackToTop from './components/BackToTop'
 import HomePage from './pages/HomePage'
 import PlaceholderPage from './pages/PlaceholderPage'
 import ImprintPage from './pages/ImprintPage'
@@ -124,6 +125,7 @@ export default function App() {
         <AppRoutes />
         <Footer />
         <CookieBanner />
+        <BackToTop />
       </BrowserRouter>
     </LanguageProvider>
   )
