@@ -151,10 +151,10 @@ export default function CertBadge({ label, title, place = 2, href }) {
           <rect width="260" height="60" rx="12" fill={bg} />
           <rect x="3" y="3" width="254" height="54" rx="10" fill="transparent" stroke="rgba(0,0,0,0.15)" strokeWidth="1" />
           <image href="https://res.cloudinary.com/df7obwqcy/image/upload/v1779714168/suhail-security/platinum.png" x="10" y="10" width="36" height="36" />
-          <text fontFamily="'DM Sans', sans-serif" fontSize="9" fontWeight="600" fill="rgba(0,0,0,0.5)" letterSpacing="0.06em" x="56" y="24">
+          <text fontFamily="'Manrope', sans-serif" fontSize="9" fontWeight="600" fill="rgba(0,0,0,0.5)" letterSpacing="0.06em" x="56" y="24">
             {label}
           </text>
-          <text fontFamily="'DM Sans', sans-serif" fontSize="15" fontWeight="700" fill="rgba(0,0,0,0.75)" x="56" y="44">
+          <text fontFamily="'Manrope', sans-serif" fontSize="15" fontWeight="700" fill="rgba(0,0,0,0.75)" x="56" y="44">
             {title}
           </text>
           <g style={{ mixBlendMode: 'overlay' }} mask={`url(#mask-${uid})`}>

@@ -30,6 +30,11 @@ export default function ServiceDetailPage() {
   const description = t(`servicesPage.detail.${id}.description`) || ''
   const offerLabel = t('servicesPage.detailOfferTitle') || (lang === 'de' ? 'Was wir anbieten' : 'What we offer')
   const bullets = String(t(`servicesPage.detail.${id}.bullets`) || '').split('|||').map(s => s.trim()).filter(Boolean)
+  const whyBulletsRaw = t(`servicesPage.detail.${id}.whyBullets`)
+  const whyBullets = (whyBulletsRaw && !String(whyBulletsRaw).includes('.whyBullets'))
+    ? String(whyBulletsRaw).split('|||').map(s => s.trim()).filter(Boolean)
+    : []
+  const whyLabel = lang === 'de' ? 'Warum Suhaili Security?' : 'Why Suhaili Security?'
 
   return (
     <div style={{ background: 'var(--bg)', color: 'var(--silver-lt)', minHeight: '100vh' }}>
@@ -54,7 +59,7 @@ export default function ServiceDetailPage() {
 
         <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 clamp(20px, 5vw, 48px) clamp(40px, 6vw, 64px)' }}>
           <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 24px 64px rgba(0,0,0,0.55)' }}>
-            <img src={heroImg} alt={title} style={{ display: 'block', width: '100%', aspectRatio: '21 / 9', objectFit: 'cover' }} />
+            <img src={heroImg} alt={title} style={{ display: 'block', width: '100%', height: 'auto', objectFit: 'contain' }} />
           </div>
         </div>
       </div>
@@ -63,11 +68,11 @@ export default function ServiceDetailPage() {
       <div ref={bodyRef} style={{ opacity: 0, maxWidth: 1160, margin: '0 auto', padding: '0 clamp(20px, 5vw, 48px) clamp(72px, 10vw, 120px)' }}>
         <div style={{ maxWidth: 760 }}>
           {tagline && (
-            <p style={{ margin: '0 0 12px', fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: RED }}>
+            <p style={{ margin: '0 0 12px', fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 400, letterSpacing: '0.2em', textTransform: 'uppercase', color: RED }}>
               {tagline}
             </p>
           )}
-          <h1 style={{ margin: '0 0 20px', fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 900, letterSpacing: '-0.03em', color: '#fff', lineHeight: 1.05 }}>
+          <h1 style={{ margin: '0 0 20px', fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 400, letterSpacing: '0.04em', color: '#fff', lineHeight: 1.0 }}>
             {title}
           </h1>
           {description && (
@@ -78,7 +83,7 @@ export default function ServiceDetailPage() {
 
           {bullets.length > 0 && (
             <>
-              <h2 style={{ margin: '0 0 20px', fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 800, color: '#fff', letterSpacing: '0.02em' }}>
+              <h2 style={{ margin: '0 0 20px', fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, color: '#fff', letterSpacing: '0.1em' }}>
                 {offerLabel}
               </h2>
               <ul style={{ listStyle: 'none', margin: '0 0 48px', padding: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -90,6 +95,22 @@ export default function ServiceDetailPage() {
                 ))}
               </ul>
             </>
+          )}
+
+          {whyBullets.length > 0 && (
+            <div style={{ marginBottom: 48 }}>
+              <h2 style={{ margin: '0 0 20px', fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, color: '#fff', letterSpacing: '0.1em' }}>
+                {whyLabel}
+              </h2>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {whyBullets.map(line => (
+                  <li key={line} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                    <span style={{ flexShrink: 0, marginTop: 5, fontSize: 13, color: RED, fontWeight: 700 }}>✔</span>
+                    <span style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--silver-lt)' }}>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
 
           <Link to="/services" className="btn-glass-red">

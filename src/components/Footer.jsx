@@ -1,293 +1,373 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import LiquidButton from './ui/LiquidButton'
-const logo = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
+import { SERVICES_ORDER } from '../data/servicesCatalog'
+
+const scrollTop = () => {
+  const lenis = /** @type {any} */ (window).__lenis
+  if (lenis) lenis.scrollTo(0, { immediate: true })
+  else window.scrollTo(0, 0)
+}
+
+const LOGO = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
+const FOOTER_IMAGE = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1782966813/Footer_ecb4lx.png'
 
 const LINKS = {
   de: [
-    { label: 'Projekte',   to: '/projects' },
-    { label: 'Über uns',   to: '/about' },
+    { label: 'Projekte', to: '/projects' },
+    { label: 'Über uns', to: '/about' },
     { label: 'Leistungen', to: '/services' },
-    { label: 'News',       to: '/news' },
-    { label: 'Galerie',    to: '/gallery' },
-    { label: 'Kontakt',    to: '/contact' },
+    { label: 'News', to: '/news' },
+    { label: 'Galerie', to: '/gallery' },
+    { label: 'Kontakt', to: '/contact' },
   ],
   en: [
     { label: 'Projects', to: '/projects' },
-    { label: 'About',    to: '/about' },
+    { label: 'About', to: '/about' },
     { label: 'Services', to: '/services' },
-    { label: 'News',     to: '/news' },
-    { label: 'Gallery',  to: '/gallery' },
-    { label: 'Contact',  to: '/contact' },
+    { label: 'News', to: '/news' },
+    { label: 'Gallery', to: '/gallery' },
+    { label: 'Contact', to: '/contact' },
   ],
 }
 
-const SERVICES = {
-  de: [
-    'Sicherheitsdienst',
-    'Objektschutz',
-    'Personenschutz',
-    'Veranstaltungsschutz',
-    'CCTV Überwachung',
-    'Streifendienst',
-    'Werkschutz',
-    'Empfangsdienst',
-  ],
-  en: [
-    'Security Service',
-    'Object Protection',
-    'VIP Security',
-    'Event Security',
-    'CCTV Surveillance',
-    'Patrol Service',
-    'Industrial Security',
-    'Reception Service',
-  ],
-}
 
-const LEGAL = {
-  de: [
-    { label: 'Impressum',            to: '/impressum' },
-    { label: 'Datenschutz',          to: '/datenschutz' },
-    { label: 'Cookie-Einstellungen', to: '/datenschutz' },
-  ],
-  en: [
-    { label: 'Imprint',          to: '/impressum' },
-    { label: 'Data protection',  to: '/datenschutz' },
-    { label: 'Cookie Settings',  to: '/datenschutz' },
-  ],
-}
+const SOCIALS = [
+  { name: 'Facebook', href: 'https://www.facebook.com/share/14fCHyzmkdC/?mibextid=wwXIfr' },
+  { name: 'TikTok', href: 'https://www.tiktok.com/@suhaili_grupp?_r=1&_t=ZG-97JgFHNP5W5' },
+  { name: 'Instagram', href: 'https://www.instagram.com/shuhaili_grupp?igsh=OXl3Mno3YzJ0MHN3&utm_source=qr' },
+]
 
-const col  = 'rgba(255,255,255,0.5)'
-const head = 'rgba(255,255,255,0.35)'
+function SocialIcon({ name }) {
+  if (name === 'Facebook') {
+    return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.7 0H1.3C.6 0 0 .6 0 1.3v21.4c0 .7.6 1.3 1.3 1.3h11.5v-9.3H9.7v-3.6h3.1V8.4c0-3.1 1.9-4.8 4.7-4.8 1.3 0 2.5.1 2.8.1V7h-1.9c-1.5 0-1.8.7-1.8 1.8v2.3h3.6l-.5 3.6h-3.1V24h6.1c.7 0 1.3-.6 1.3-1.3V1.3C24 .6 23.4 0 22.7 0Z"/></svg>
+  }
+  if (name === 'TikTok') {
+    return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 0h3.9c.1 1.5.6 3.1 1.8 4.2 1.1 1.1 2.7 1.6 4.2 1.8v4a9 9 0 0 1-5.8-1.9v8.7a7.2 7.2 0 0 1-7.3 7.2 7.5 7.5 0 0 1-4.1-1 7.4 7.4 0 0 1-3.6-5.8v-1.5a7.2 7.2 0 0 1 8.7-6.6v4.4a3.2 3.2 0 0 0-3 .4 3.3 3.3 0 0 0-1.6 3.4 3.4 3.4 0 0 0 3.5 2.9 3.3 3.3 0 0 0 3.2-2.7c.1-1.8.1-3.6.1-5.4V0Z"/></svg>
+  }
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.2.1 4.7 1.7 4.9 4.9V12c0 3.2 0 3.6-.1 4.9-.1 3.2-1.7 4.7-4.9 4.9H12c-3.2 0-3.6 0-4.9-.1-3.2-.1-4.7-1.7-4.9-4.9V12c0-3.2 0-3.6.1-4.9.1-3.2 1.7-4.7 4.9-4.9H12ZM12 0H7C2.7.2.3 2.7.1 7v10c.2 4.3 2.7 6.7 7 6.9h10c4.3-.2 6.7-2.7 6.9-7V7c-.2-4.3-2.7-6.7-7-6.9H12Zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4Zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Z"/></svg>
+}
 
 export default function Footer() {
-  const { lang } = useLanguage()
+  const { lang, t } = useLanguage()
+  const isGerman = lang === 'de'
 
   return (
-    <footer style={{ background: '#000000', fontFamily: 'var(--font-body)', color: '#fff' }}>
-
-      {/* CTA strip */}
-      <div style={{
-        borderBottom: '1px solid rgba(255,255,255,0.07)',
-        padding: 'clamp(40px, 7vw, 72px) clamp(20px, 5vw, 40px)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 28,
-      }}>
+    <footer className="site-footer">
+      <section className="footer-cta">
         <div>
-          <p style={{ margin: '0 0 6px', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#c0392b', fontFamily: 'var(--font-display)' }}>
-            {lang === 'de' ? 'Jetzt handeln' : 'Take Action'}
-          </p>
-          <h2 style={{
-            margin: 0,
-            fontFamily: 'var(--font-display)', fontWeight: 900,
-            fontSize: 'clamp(32px, 6vw, 72px)',
-            letterSpacing: '-0.03em', lineHeight: 0.95,
-            textTransform: 'uppercase', color: '#fff',
-          }}>
-            {lang === 'de' ? <>SICHERN SIE<br />IHR UNTERNEHMEN<br /><span style={{ color: '#c0392b' }}>JETZT.</span></> : <>PROTECT YOUR<br />BUSINESS<br /><span style={{ color: '#c0392b' }}>NOW.</span></>}
+          <h2>
+            {isGerman
+              ? <>IHR PARTNER FÜR<br /><strong>SICHERHEIT</strong></>
+              : <>YOUR PARTNER FOR<br /><strong>SECURITY</strong></>}
           </h2>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
+        <div className="footer-cta-actions">
           <LiquidButton
-            as={Link} to="/contact"
-            tint="rgba(192,57,43,0.9)" textColor="#fff"
-            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, letterSpacing: '0.08em', textTransform: 'uppercase' }}
+            as={Link}
+            to="/contact"
+            tint="rgba(192,57,43,0.9)"
+            textColor="#fff"
+            onClick={scrollTop}
+            style={{ fontFamily: 'var(--font-display)', fontSize: 14, letterSpacing: '0.08em', textTransform: 'uppercase' }}
           >
-            {lang === 'de' ? 'Jetzt Angebot anfordern' : 'Request a Quote Now'} →
+            {isGerman ? 'Jetzt Angebot anfordern' : 'Request a Quote Now'} →
           </LiquidButton>
           <LiquidButton
-            as={Link} to="/services"
-            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, letterSpacing: '0.08em', textTransform: 'uppercase' }}
+            as={Link}
+            to="/services"
+            onClick={scrollTop}
+            style={{ fontFamily: 'var(--font-display)', fontSize: 14, letterSpacing: '0.08em', textTransform: 'uppercase' }}
           >
-            {lang === 'de' ? 'Leistungen ansehen' : 'View Services'}
+            {isGerman ? 'Leistungen ansehen' : 'View Services'}
           </LiquidButton>
         </div>
-      </div>
+      </section>
 
-      {/* Main grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1.5fr 1fr 1fr 1fr',
-        gap: '0 clamp(28px, 4vw, 60px)',
-        padding: 'clamp(40px, 8vw, 72px) clamp(20px, 5vw, 40px) clamp(24px, 5vw, 40px)',
-        alignItems: 'start',
-      }}
-        className="footer-grid"
-      >
-
-        {/* Brand col */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <Link to="/" style={{ alignSelf: 'flex-start' }}>
-            <img
-              src={logo}
-              alt="Suhaili Security"
-              style={{
-                height: 'clamp(110px, 18vw, 180px)',
-                width: 'auto',
-                maxWidth: 'min(100%, 360px)',
-                objectFit: 'contain',
-                objectPosition: 'left top',
-                display: 'block',
-                filter: 'drop-shadow(0 2px 12px rgba(0,0,0,0.5))',
-              }}
-            />
+      <div className="footer-main-grid">
+        <div className="footer-brand-column">
+          <Link to="/" className="footer-logo-link">
+            <img src={LOGO} alt="Suhaili Security" />
           </Link>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxWidth: 280 }}>
-            <p style={{ margin: 0, fontSize: 14, color: col, lineHeight: 1.65 }}>
-              {lang === 'de'
-                ? 'Professionelle Sicherheitslösungen für Unternehmen und Privatkunden in Deutschland.'
-                : 'Professional security solutions for businesses and private clients across Germany.'}
-            </p>
-            {['Security@suhaili.de', 'Info.Security@suhaili.de', 'Kontakt.Security@suhaili.de'].map((addr, i) => (
-              <a
-                key={addr}
-                href={`mailto:${addr}`}
-                style={{ marginTop: i === 0 ? 12 : 4, fontSize: 13, color: col, textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.color = col }}
-              >
-                {addr}
-              </a>
-            ))}
-            {/* Phone number with icon */}
-            <a
-              href="tel:+4917641180455"
-              style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 15, fontWeight: 600, color: '#fff', textDecoration: 'none', transition: 'color 0.2s', marginTop: 4 }}
-              onMouseEnter={e => { e.currentTarget.style.color = '#c0392b' }}
-              onMouseLeave={e => { e.currentTarget.style.color = '#fff' }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.1 2.38 2 2 0 012.1 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/>
-              </svg>
-              +49 176 41180455
-            </a>
-
-            {/* WhatsApp button */}
-            <a
-              href="https://wa.me/4917641180455"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 12, padding: '9px 18px', borderRadius: 999, background: '#25D366', color: '#fff', fontSize: 14, fontWeight: 700, textDecoration: 'none', transition: 'background 0.2s, transform 0.15s', width: 'fit-content' }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#1ebe5d'; e.currentTarget.style.transform = 'scale(1.04)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = '#25D366'; e.currentTarget.style.transform = 'scale(1)' }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
-              WhatsApp
-            </a>
-
-            {/* Social Icons */}
-            <div style={{ display: 'flex', gap: 16, marginTop: 12, alignItems: 'center' }}>
-              <a href="https://www.facebook.com/share/14fCHyzmkdC/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" style={{ color: col, transition: 'color 0.2s, transform 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = '#c0392b'; e.currentTarget.style.transform = 'scale(1.1)' }} onMouseLeave={e => { e.currentTarget.style.color = col; e.currentTarget.style.transform = 'scale(1)' }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.408 0 22.675 0z"/>
-                </svg>
-              </a>
-              <a href="https://www.tiktok.com/@suhaili_grupp?_r=1&_t=ZG-97JgFHNP5W5" target="_blank" rel="noopener noreferrer" style={{ color: col, transition: 'color 0.2s, transform 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = '#c0392b'; e.currentTarget.style.transform = 'scale(1.1)' }} onMouseLeave={e => { e.currentTarget.style.color = col; e.currentTarget.style.transform = 'scale(1)' }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                </svg>
-              </a>
-              <a href="https://www.instagram.com/shuhaili_grupp?igsh=OXl3Mno3YzJ0MHN3&utm_source=qr" target="_blank" rel="noopener noreferrer" style={{ color: col, transition: 'color 0.2s, transform 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = '#c0392b'; e.currentTarget.style.transform = 'scale(1.1)' }} onMouseLeave={e => { e.currentTarget.style.color = col; e.currentTarget.style.transform = 'scale(1)' }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.07M12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Links col */}
-        <div>
-          <p style={{ margin: '0 0 20px', fontSize: 11, fontWeight: 500, color: head, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-            Links
+          <p className="footer-description">
+            {isGerman
+              ? 'Professionelle Sicherheitslösungen für Unternehmen und Privatkunden in Deutschland.'
+              : 'Professional security solutions for businesses and private clients across Germany.'}
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 13 }}>
-            {LINKS[lang].map(({ label, to }) => (
-              <Link
-                key={to}
-                to={to}
-                style={{ fontSize: 14, color: col, textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.color = col }}
-              >
-                {label}
-              </Link>
+          <div className="footer-emails">
+            {['Security@suhaili.de', 'Info.Security@suhaili.de', 'Kontakt.Security@suhaili.de'].map((email) => (
+              <a href={`mailto:${email}`} key={email}>{email}</a>
+            ))}
+          </div>
+          <a className="footer-phone" href="tel:+4917641180455">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 3.1 11 19.8 19.8 0 0 1 .1 2.4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L6.1 8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.8.6 2.8.7a2 2 0 0 1 1.7 2v2Z"/></svg>
+            +49 176 41180455
+          </a>
+          <a className="footer-whatsapp" href="https://wa.me/4917641180455" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 32 32" aria-hidden="true" fill="currentColor"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.648 4.829 1.781 6.858L2 30l7.338-1.92A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 0 1-5.83-1.594l-.418-.248-4.352 1.14 1.16-4.24-.272-.436A11.453 11.453 0 0 1 4.5 16C4.5 9.649 9.649 4.5 16 4.5S27.5 9.649 27.5 16 22.351 27.5 16 27.5zm6.29-8.61c-.344-.172-2.036-1.004-2.352-1.118-.316-.115-.547-.172-.777.172-.23.344-.892 1.118-1.094 1.348-.2.23-.402.258-.746.086-.344-.172-1.453-.535-2.769-1.707-1.023-.912-1.713-2.039-1.913-2.383-.2-.344-.022-.53.15-.701.155-.155.344-.402.516-.603.172-.2.23-.344.344-.574.115-.23.058-.43-.029-.602-.086-.172-.777-1.875-1.065-2.566-.281-.672-.566-.58-.777-.59l-.66-.011c-.23 0-.603.086-.918.43-.316.344-1.207 1.18-1.207 2.877s1.235 3.338 1.407 3.567c.172.23 2.43 3.712 5.886 5.208.823.355 1.465.567 1.965.726.826.263 1.578.226 2.172.137.663-.099 2.036-.832 2.323-1.636.287-.803.287-1.492.2-1.636-.086-.143-.316-.23-.66-.402z"/></svg>
+            WhatsApp
+          </a>
+          <div className="footer-socials">
+            {SOCIALS.map(({ name, href }) => (
+              <a href={href} target="_blank" rel="noopener noreferrer" aria-label={name} key={name}>
+                <SocialIcon name={name} />
+              </a>
             ))}
           </div>
         </div>
 
-        {/* Services col */}
-        <div>
-          <p style={{ margin: '0 0 20px', fontSize: 11, fontWeight: 500, color: head, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-            {lang === 'de' ? 'Leistungen' : 'Services'}
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 13 }}>
-            {SERVICES[lang].map(s => (
-              <Link
-                key={s}
-                to="/services"
-                style={{ fontSize: 14, color: col, textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.color = col }}
-              >
-                {s}
-              </Link>
-            ))}
-          </div>
+        <div className="footer-link-column footer-links-column">
+          <p className="footer-column-title">Links</p>
+          {LINKS[lang].map(({ label, to }) => <Link to={to} key={to}>{label}</Link>)}
         </div>
 
-        {/* Legal col */}
-        <div>
-          <p style={{ margin: '0 0 20px', fontSize: 11, fontWeight: 500, color: head, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-            {lang === 'de' ? 'Rechtliches' : 'Legal'}
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 13 }}>
-            {LEGAL[lang].map(({ label, to }) => (
-              <Link
-                key={to}
-                to={to}
-                style={{ fontSize: 14, color: col, textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.color = col }}
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
+        <div className="footer-link-column footer-services-column">
+          <p className="footer-column-title">{isGerman ? 'Unsere Leistungen' : 'Services we offer'}</p>
+          {SERVICES_ORDER.map((serviceId) => (
+            <Link to={`/services/${serviceId}`} key={serviceId}>
+              {t(`servicesPage.cards.${serviceId}.title`) || serviceId}
+            </Link>
+          ))}
+        </div>
+
+        <div className="footer-link-column footer-legal-column">
+          <p className="footer-column-title">{isGerman ? 'Rechtliches' : 'Legal'}</p>
+          <button
+            type="button"
+            className="footer-cookie-button"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-cookie-settings'))}
+          >
+            {isGerman ? 'Cookie-Einstellungen' : 'Cookie Settings'}
+          </button>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div style={{
-        borderTop: '1px solid rgba(255,255,255,0.07)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: 6,
-        padding: 'clamp(24px, 4vw, 36px) clamp(20px, 5vw, 40px) clamp(32px, 6vw, 56px)',
-      }}>
-        <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.22)' }}>
-          © {new Date().getFullYear()} Suhaili Security.{' '}
-          {lang === 'de' ? 'Alle Rechte vorbehalten.' : 'All rights reserved.'}
-        </span>
-        <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.22)', display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'rgba(255,255,255,0.22)', display: 'inline-block' }} />
-          Ritterlandweg 2, 13409 Berlin
-        </span>
+      <div className="footer-network-panel">
+        <img src={FOOTER_IMAGE} alt="" aria-hidden="true" />
+        <div className="footer-network-shade" aria-hidden="true" />
+        <div className="footer-network-copy">
+          <span className="footer-network-line" aria-hidden="true" />
+          <h2>
+            {isGerman ? <>Ein starkes Netzwerk für <strong>sichere Ergebnisse.</strong></> : <>A strong network for <strong>secure results.</strong></>}
+          </h2>
+          <p>
+            {isGerman
+              ? 'Gemeinsam schaffen wir Sicherheit, Vertrauen und nachhaltige Lösungen für unsere Kunden.'
+              : 'Together we create security, trust and sustainable solutions for our clients.'}
+          </p>
+        </div>
+      </div>
+
+      <div className="footer-bottom-bar">
+        <span>© {new Date().getFullYear()} Suhaili Security. {isGerman ? 'Alle Rechte vorbehalten.' : 'All rights reserved.'}</span>
+        <div><span>Berlin, Germany</span><span className="footer-bottom-dot" aria-hidden>·</span><Link to="/impressum">{isGerman ? 'Impressum' : 'Imprint'}</Link></div>
       </div>
 
       <style>{`
-        @media (max-width: 960px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 36px 24px !important; }
-          .footer-grid > div:first-child { grid-column: 1 / -1; }
+        .site-footer {
+          position: relative;
+          padding: 0 clamp(20px, 4vw, 50px) 34px;
+          color: #fff;
+          background: #000;
+          border-top: 1px solid rgba(255,255,255,.08);
+          font-family: var(--font-body);
         }
-        @media (max-width: 540px) {
-          .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+        .footer-cta {
+          max-width: 1820px;
+          min-height: 330px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          gap: 28px;
+          margin: 0 auto;
+          padding: clamp(54px, 7vw, 92px) 0;
+        }
+        .footer-cta h2 {
+          max-width: 1100px;
+          margin: 0;
+          color: #fff;
+          font-family: var(--font-display);
+          font-size: clamp(68px, 9.2vw, 150px);
+          font-weight: 700;
+          letter-spacing: .005em;
+          line-height: .94;
+          text-transform: uppercase;
+        }
+        .footer-cta h2 strong { color: var(--red-light); font-weight: inherit; }
+        .footer-cta-actions { display: flex; flex-direction: row; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .footer-main-grid {
+          display: grid;
+          grid-template-columns: minmax(260px, 1.45fr) minmax(130px, .8fr) minmax(190px, 1fr) minmax(140px, .7fr);
+          gap: clamp(34px, 6vw, 110px);
+          max-width: 1820px;
+          margin: 0 auto;
+          padding-top: clamp(66px, 8vw, 104px);
+          align-items: start;
+        }
+        .footer-brand-column { min-width: 0; }
+        .footer-logo-link { display: inline-block; }
+        .footer-logo-link img {
+          width: min(100%, 430px);
+          height: auto;
+          max-height: 245px;
+          object-fit: contain;
+          object-position: left center;
+        }
+        .footer-description {
+          max-width: 355px;
+          margin: 26px 0 20px;
+          color: rgba(255,255,255,.48);
+          font-size: 14px;
+          line-height: 1.7;
+        }
+        .footer-emails { display: flex; flex-direction: column; gap: 8px; }
+        .footer-emails a,
+        .footer-link-column a,
+        .footer-cookie-button {
+          color: rgba(255,255,255,.55);
+          font-size: 14px;
+          line-height: 1.45;
+          transition: color .2s ease, transform .2s ease;
+        }
+        .footer-emails a:hover,
+        .footer-link-column a:hover,
+        .footer-cookie-button:hover { color: #fff; transform: translateX(3px); }
+        .footer-cookie-button {
+          width: fit-content;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background: transparent;
+          text-align: left;
+          cursor: pointer;
+        }
+        .footer-phone {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          width: fit-content;
+          margin-top: 24px;
+          color: #fff;
+          font-size: 18px;
+          font-weight: 700;
+        }
+        .footer-phone svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+        .footer-whatsapp {
+          width: fit-content;
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          margin-top: 18px;
+          padding: 11px 20px;
+          border-radius: 999px;
+          color: #fff;
+          background: #25d366;
+          font-size: 14px;
+          font-weight: 700;
+          transition: transform .2s ease, background .2s ease;
+        }
+        .footer-whatsapp:hover { transform: translateY(-2px); background: #1fbd5a; }
+        .footer-whatsapp svg { width: 19px; height: 19px; fill: currentColor; }
+        .footer-socials { display: flex; align-items: center; gap: 18px; margin-top: 34px; }
+        .footer-socials a { color: rgba(255,255,255,.43); transition: color .2s ease, transform .2s ease; }
+        .footer-socials a:hover { color: var(--red-light); transform: translateY(-2px); }
+        .footer-socials svg { display: block; width: 23px; height: 23px; fill: currentColor; }
+        .footer-link-column { display: flex; flex-direction: column; gap: 17px; padding-top: 24px; }
+        .footer-column-title {
+          margin: 0 0 7px;
+          color: rgba(255,255,255,.3);
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: .08em;
+          text-transform: uppercase;
+        }
+        .footer-network-panel {
+          position: relative;
+          height: clamp(230px, 15vw, 270px);
+          max-width: 1820px;
+          margin: 96px auto 0;
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,.06);
+          border-radius: 24px;
+        }
+        .footer-network-panel > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .footer-network-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, rgba(0,0,0,.05) 25%, rgba(0,0,0,.35) 58%, rgba(0,0,0,.88) 100%);
+        }
+        .footer-network-copy {
+          position: absolute;
+          z-index: 1;
+          top: 50%;
+          right: clamp(28px, 5vw, 80px);
+          width: min(430px, 42%);
+          transform: translateY(-50%);
+          text-align: right;
+        }
+        .footer-network-line { display: block; width: 48px; height: 3px; margin: 0 0 18px auto; background: var(--red-light); }
+        .footer-network-copy h2 { margin: 0; font-size: clamp(24px, 2.4vw, 38px); line-height: 1.18; }
+        .footer-network-copy h2 strong { color: var(--red-light); }
+        .footer-network-copy p { margin: 18px 0 0; color: rgba(255,255,255,.74); font-size: 14px; line-height: 1.7; }
+        .footer-bottom-bar {
+          max-width: 1820px;
+          display: flex;
+          justify-content: space-between;
+          gap: 20px;
+          margin: 0 auto;
+          padding: 70px 0 8px;
+          color: rgba(255,255,255,.25);
+          font-size: 12px;
+        }
+        .footer-bottom-bar > div { display: flex; gap: 10px; align-items: center; }
+        .footer-bottom-dot { opacity: 0.3; }
+        .footer-bottom-bar a { color: inherit; transition: color .2s ease; }
+        .footer-bottom-bar a:hover { color: #fff; }
+        @media (max-width: 980px) {
+          .footer-main-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 30px; }
+          .footer-brand-column { grid-column: 1 / -1; }
+          .footer-logo-link img { width: min(100%, 330px); }
+        }
+        @media (max-width: 620px) {
+          .footer-cta { min-height: 0; flex-direction: column; align-items: flex-start; padding: 58px 0; }
+          .footer-cta h2 { font-size: clamp(54px, 16vw, 76px); }
+          .footer-main-grid { grid-template-columns: 1fr; gap: 42px; }
+          .footer-brand-column,
+          .footer-links-column,
+          .footer-services-column,
+          .footer-legal-column { grid-column: 1 / -1; }
+          .footer-services-column {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 18px;
+            row-gap: 14px;
+          }
+          .footer-services-column .footer-column-title { grid-column: 1 / -1; }
+          .footer-services-column a { font-size: 13px; }
+          .footer-logo-link img { width: min(100%, 285px); max-height: 185px; }
+          .footer-link-column { padding-top: 0; }
+          .footer-network-panel {
+            height: auto;
+            aspect-ratio: 2.25 / 1;
+            margin-top: 66px;
+            border-radius: 18px;
+          }
+          .footer-network-shade { background: linear-gradient(0deg, rgba(0,0,0,.94), rgba(0,0,0,.15) 80%); }
+          .footer-network-copy {
+            top: 50%;
+            right: 20px;
+            bottom: auto;
+            left: 20px;
+            width: auto;
+            transform: translateY(-50%);
+            text-align: right;
+          }
+          .footer-network-line { width: 44px; height: 2px; margin: 0 0 12px auto; }
+          .footer-network-copy h2 { font-size: 16px; line-height: 1.25; white-space: nowrap; }
+          .footer-network-copy p { max-width: 350px; margin: 12px auto 0; font-size: 12px; line-height: 1.55; }
+          .footer-bottom-bar { flex-direction: column; align-items: flex-start; padding-top: 42px; }
+          .footer-bottom-bar > div { justify-content: flex-start; }
         }
       `}</style>
     </footer>

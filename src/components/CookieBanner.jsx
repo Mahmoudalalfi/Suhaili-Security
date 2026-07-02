@@ -13,11 +13,29 @@ export default function CookieBanner() {
   const [marketing, setMarketing] = useState(false)
 
   useEffect(() => {
-    if (!localStorage.getItem(STORAGE_KEY)) setVisible(true)
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (!stored) setVisible(true)
+
+    function openCookieSettings() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
+        setAnalytics(Boolean(saved.analytics))
+        setMarketing(Boolean(saved.marketing))
+      } catch {
+        setAnalytics(false)
+        setMarketing(false)
+      }
+      setShowSettings(true)
+      setVisible(true)
+    }
+
+    window.addEventListener('open-cookie-settings', openCookieSettings)
+    return () => window.removeEventListener('open-cookie-settings', openCookieSettings)
   }, [])
 
   function save(choice) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(choice))
+    window.dispatchEvent(new CustomEvent('cookie-consent-changed', { detail: choice }))
     setVisible(false)
     setShowSettings(false)
   }
@@ -32,6 +50,7 @@ export default function CookieBanner() {
     accept:  'Alle akzeptieren',
     reject:  'Ablehnen',
     settings:'Einstellungen',
+    back:    'Zurück',
     save:    'Auswahl speichern',
     essential:     'Notwendige Cookies',
     essentialDesc: 'Immer aktiv – für den Betrieb der Website erforderlich.',
@@ -45,6 +64,7 @@ export default function CookieBanner() {
     accept:  'Accept All',
     reject:  'Reject',
     settings:'Settings',
+    back:    'Back',
     save:    'Save Selection',
     essential:     'Essential Cookies',
     essentialDesc: 'Always active – required for the website to function.',
@@ -145,7 +165,7 @@ export default function CookieBanner() {
                 onClick={() => setShowSettings(v => !v)}
                 style={btnStyle('ghost')}
               >
-                {c.settings}
+                {showSettings ? c.back : c.settings}
               </button>
               <button onClick={rejectAll} style={btnStyle('outline')}>
                 {c.reject}

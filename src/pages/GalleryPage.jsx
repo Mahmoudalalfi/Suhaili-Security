@@ -10,103 +10,73 @@ gsap.registerPlugin(ScrollTrigger)
 const WHY_ICONS = ['shield', 'bolt', 'list', 'users', 'layers', 'pin', 'check', 'handshake']
 
 function WhyIcon({ name }) {
-  const common = { width: 22, height: 22, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }
+  const s = { width: 22, height: 22, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.75, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }
   switch (name) {
-    case 'shield':
+    case 'shield': // Proven reliability — shield with checkmark
       return (
-        <svg {...common}>
-          <path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6l-8-3Z" />
+        <svg {...s}>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
         </svg>
       )
-    case 'bolt':
+    case 'bolt': // Rapid alarm response — siren / bell alert
       return (
-        <svg {...common}>
-          <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" />
+        <svg {...s}>
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
         </svg>
       )
-    case 'list':
+    case 'list': // Clear scopes of work — clipboard checklist
       return (
-        <svg {...common}>
-          <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+        <svg {...s}>
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+          <rect x="9" y="3" width="6" height="4" rx="1" />
+          <path d="m9 12 2 2 4-4M9 17h4" />
         </svg>
       )
-    case 'users':
+    case 'users': // Qualified security teams — badge / ID card
       return (
-        <svg {...common}>
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        <svg {...s}>
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <circle cx="9" cy="11" r="2.5" />
+          <path d="M5 19c0-2.2 1.8-4 4-4h.5" />
+          <path d="M14 10h4M14 14h3" />
         </svg>
       )
-    case 'layers':
+    case 'layers': // End-to-end site security — lock
       return (
-        <svg {...common}>
-          <path d="m12.83 2.18 8.58 4.52a1 1 0 0 1 0 1.78l-8.58 4.52a2 2 0 0 1-1.66 0L2.59 8.48a1 1 0 0 1 0-1.78l8.58-4.52a2 2 0 0 1 1.66 0Z" />
-          <path d="m2.6 15.49 8.6 4.52a2 2 0 0 0 1.66 0l8.54-4.52M2.6 11.51l8.6 4.52a2 2 0 0 0 1.66 0l8.54-4.52" />
+        <svg {...s}>
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          <circle cx="12" cy="16" r="1.5" fill="currentColor" stroke="none" />
         </svg>
       )
-    case 'pin':
+    case 'pin': // Berlin & region — map pin / location
       return (
-        <svg {...common}>
-          <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z" />
-          <circle cx="12" cy="10" r="3" />
+        <svg {...s}>
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+          <circle cx="12" cy="9" r="2.5" />
         </svg>
       )
-    case 'check':
+    case 'check': // Quality & documentation — file with tick
       return (
-        <svg {...common}>
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-          <path d="m22 4-10 10-3-3" />
+        <svg {...s}>
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <path d="M14 2v6h6" />
+          <path d="m9 15 2 2 4-4" />
         </svg>
       )
-    case 'handshake':
+    case 'handshake': // Discretion & partnership — eye with slash (privacy)
       return (
-        <svg {...common}>
-          <path d="M11 14h2a2 2 0 0 0 0-4h-2a1 1 0 0 1-1-1 1 1 0 0 1 1-1h7" />
-          <path d="M17.5 5.5 21 10M3 10l3.5-4.5M7 14h2a2 2 0 0 1 0 4h-2a1 1 0 0 0-1 1 1 1 0 0 0 1 1h7" />
+        <svg {...s}>
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+          <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+          <path d="m2 2 20 20" />
         </svg>
       )
     default:
       return null
   }
-}
-
-function whyCardSpotlightAllowed() {
-  if (typeof window === 'undefined') return false
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
-  return window.matchMedia('(hover: hover) and (pointer: fine)').matches
-}
-
-/** Cursor-driven radial glow + conic border highlight (red palette). */
-function whyCardSpotPointerEnter(e) {
-  if (!whyCardSpotlightAllowed()) return
-  const el = e.currentTarget
-  const r = el.getBoundingClientRect()
-  const cx = r.width / 2
-  const cy = r.height / 2
-  el.style.setProperty('--spot-x', `${cx}px`)
-  el.style.setProperty('--spot-y', `${cy}px`)
-  el.style.setProperty('--beam-angle', '0deg')
-  el.style.setProperty('--spot-opacity', '1')
-}
-
-function whyCardSpotPointerMove(e) {
-  if (!whyCardSpotlightAllowed()) return
-  const el = e.currentTarget
-  const r = el.getBoundingClientRect()
-  const x = e.clientX - r.left
-  const y = e.clientY - r.top
-  const cx = r.width / 2
-  const cy = r.height / 2
-  const angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI)
-  el.style.setProperty('--spot-x', `${x}px`)
-  el.style.setProperty('--spot-y', `${y}px`)
-  el.style.setProperty('--beam-angle', `${angle + 90}deg`)
-  el.style.setProperty('--spot-opacity', '1')
-}
-
-function whyCardSpotPointerLeave(e) {
-  e.currentTarget.style.setProperty('--spot-opacity', '0')
 }
 
 function GalleryRibbon({ items, direction, rowKey, style, t }) {
@@ -283,9 +253,6 @@ export default function GalleryPage() {
                   whyRef.current[index] = el
                 }}
                 className="gallery-why-card"
-                onPointerEnter={whyCardSpotPointerEnter}
-                onPointerMove={whyCardSpotPointerMove}
-                onPointerLeave={whyCardSpotPointerLeave}
               >
                 <div className="gallery-why-icon" aria-hidden>
                   <WhyIcon name={WHY_ICONS[index]} />
@@ -575,92 +542,58 @@ export default function GalleryPage() {
           }
         }
         .gallery-why-card {
-          --spot-opacity: 0;
-          --spot-x: 50%;
-          --spot-y: 50%;
-          --beam-angle: 0deg;
           position: relative;
-          isolation: isolate;
           overflow: hidden;
-          padding: clamp(20px, 2.5vw, 24px) clamp(18px, 2.2vw, 22px) clamp(22px, 2.8vw, 26px);
-          border-radius: 16px;
-          background: var(--bg-card);
-          border: 1px solid rgba(255, 255, 255, 0.09);
+          min-height: 230px;
+          padding: clamp(24px, 3vw, 30px);
+          border-radius: 18px;
+          background: linear-gradient(155deg, #181818 0%, #101010 58%, #0b0b0b 100%);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.05),
-            0 16px 40px rgba(0, 0, 0, 0.38);
+            inset 0 1px 0 rgba(255, 255, 255, 0.07),
+            0 22px 54px rgba(0, 0, 0, 0.32);
           transition:
-            border-color 0.34s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.34s cubic-bezier(0.4, 0, 0.2, 1),
-            transform 0.34s cubic-bezier(0.4, 0, 0.2, 1);
+            border-color 0.28s ease,
+            box-shadow 0.28s ease,
+            transform 0.28s ease;
           -webkit-tap-highlight-color: transparent;
         }
         .gallery-why-card::before {
           content: '';
           position: absolute;
-          inset: 0;
-          z-index: 0;
-          border-radius: inherit;
+          top: 0;
+          left: 24px;
+          right: 24px;
+          height: 1px;
           pointer-events: none;
-          opacity: var(--spot-opacity);
-          transition: opacity 0.35s ease;
-          background: radial-gradient(
-            520px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-            rgba(231, 76, 60, 0.26) 0%,
-            rgba(231, 76, 60, 0.08) 32%,
-            transparent 56%
-          );
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
         }
         .gallery-why-card::after {
           content: '';
           position: absolute;
-          inset: -1px;
-          z-index: 0;
-          border-radius: 17px;
+          top: -70px;
+          right: -70px;
+          width: 170px;
+          height: 170px;
+          border-radius: 50%;
           pointer-events: none;
-          opacity: var(--spot-opacity);
-          transition: opacity 0.3s ease;
-          padding: 1px;
-          background: conic-gradient(
-            from var(--beam-angle),
-            rgba(255, 255, 255, 0.04) 0%,
-            rgba(231, 76, 60, 0.12) 12%,
-            rgba(231, 76, 60, 0.95) 19%,
-            rgba(231, 76, 60, 0.45) 26%,
-            rgba(255, 255, 255, 0.05) 38%,
-            transparent 52%
-          );
-          -webkit-mask:
-            linear-gradient(#fff 0 0) content-box,
-            linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
+          background: radial-gradient(circle, rgba(231,76,60,0.09), transparent 68%);
         }
         .gallery-why-card > * {
           position: relative;
           z-index: 1;
         }
-        @media (prefers-reduced-motion: reduce) {
-          .gallery-why-card::before,
-          .gallery-why-card::after {
-            display: none;
-          }
-        }
         @media (hover: hover) and (pointer: fine) {
           .gallery-why-card:hover {
-            border-color: rgba(231, 76, 60, 0.38);
+            border-color: rgba(231, 76, 60, 0.28);
             box-shadow:
-              inset 0 1px 0 rgba(255, 255, 255, 0.05),
-              0 20px 48px rgba(0, 0, 0, 0.46),
-              0 0 28px rgba(192, 57, 43, 0.1);
-            transform: translateY(-4px);
+              inset 0 1px 0 rgba(255, 255, 255, 0.09),
+              0 28px 64px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
           }
           .gallery-why-card:hover .gallery-why-icon {
-            background: #121212;
-            color: var(--red-light);
-            box-shadow:
-              inset 0 0 0 1px rgba(231, 76, 60, 0.35),
-              0 0 18px rgba(231, 76, 60, 0.12);
+            background: rgba(231,76,60,0.14);
+            border-color: rgba(231,76,60,0.38);
           }
           .gallery-why-card:hover .gallery-why-card-title {
             color: var(--red-light);
@@ -673,35 +606,35 @@ export default function GalleryPage() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 44px;
-          height: 44px;
-          border-radius: 12px;
-          margin-bottom: 14px;
-          color: #1a1a1a;
-          background: linear-gradient(145deg, var(--silver-lt), #a8a8a8);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          margin-bottom: 22px;
+          color: var(--red-light);
+          background: rgba(231,76,60,0.08);
+          border: 1px solid rgba(231,76,60,0.2);
           transition:
-            background 0.34s cubic-bezier(0.4, 0, 0.2, 1),
-            color 0.34s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.34s cubic-bezier(0.4, 0, 0.2, 1);
+            background 0.28s ease,
+            border-color 0.28s ease;
         }
         .gallery-why-card-title {
-          margin: 0 0 10px;
-          font-size: 12px;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
+          margin: 0 0 12px;
+          font-size: 15px;
+          font-weight: 700;
+          letter-spacing: -0.015em;
+          text-transform: none;
           color: #fff;
-          line-height: 1.25;
-          transition: color 0.34s cubic-bezier(0.4, 0, 0.2, 1);
+          line-height: 1.35;
+          transition: color 0.28s ease;
         }
         .gallery-why-card-body {
           margin: 0;
-          font-size: 14px;
-          line-height: 1.62;
-          color: var(--silver);
-          transition: color 0.34s cubic-bezier(0.4, 0, 0.2, 1);
+          font-size: 13.5px;
+          line-height: 1.72;
+          color: rgba(232,232,232,0.6);
+          transition: color 0.28s ease;
         }
+        @media (max-width: 639px) { .gallery-why-card { min-height: 0; } }
       `}</style>
     </div>
   )

@@ -92,7 +92,6 @@ export default function NewsPage() {
               >
                 <div className="news-card-image-wrap">
                   <img src={NEWS_IMAGE_BY_ID[id]} alt="" className="news-card-img" loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
-                  <div className="news-card-image-ribbon" aria-hidden />
                 </div>
                 <div className="news-card-body">
                   <p className="news-meta">{t(`newsPage.articles.${id}.meta`)}</p>
@@ -194,7 +193,7 @@ export default function NewsPage() {
         .news-grid {
           display: grid;
           grid-template-columns: 1fr;
-          gap: clamp(22px, 3vw, 28px);
+          gap: clamp(34px, 5vw, 56px) clamp(24px, 4vw, 42px);
           align-items: stretch;
         }
         @media (min-width: 720px) {
@@ -207,83 +206,64 @@ export default function NewsPage() {
           flex-direction: column;
           min-width: 0;
           height: 100%;
-          border-radius: 16px;
-          overflow: hidden;
-          border: 1px solid rgba(255, 255, 255, 0.09);
-          background: var(--bg-card);
-          box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.06),
-            0 18px 50px rgba(0, 0, 0, 0.42);
-          transition: border-color 0.22s ease, transform 0.28s ease, box-shadow 0.28s ease;
+          padding-bottom: clamp(24px, 3vw, 34px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+          background: transparent;
           -webkit-tap-highlight-color: transparent;
           scroll-margin-top: calc(var(--site-header-min-height, 132px) + 16px);
         }
         @media (hover: hover) and (pointer: fine) {
-          .news-card:hover {
-            border-color: rgba(231, 76, 60, 0.38);
-            transform: translateY(-4px);
-            box-shadow:
-              inset 0 1px 0 rgba(255, 255, 255, 0.08),
-              0 24px 60px rgba(0, 0, 0, 0.48);
-          }
           .news-card:hover .news-card-img {
-            transform: scale(1.03);
+            transform: scale(1.018);
           }
+          .news-card:hover .news-card-title { color: var(--red-light); }
         }
         .news-card-image-wrap {
           position: relative;
           flex-shrink: 0;
           aspect-ratio: 16 / 10;
           overflow: hidden;
+          border-radius: 10px;
+          border: 1px solid rgba(255,255,255,0.08);
           background: #0a0a0a;
         }
         .news-card-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.5s ease;
-        }
-        .news-card-image-ribbon {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, var(--red), var(--red-light), transparent);
-          opacity: 0.85;
-          pointer-events: none;
+          transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
         }
         .news-card-body {
           flex: 1;
           display: flex;
           flex-direction: column;
-          gap: 10px;
-          padding: clamp(18px, 2.5vw, 22px) clamp(18px, 2.5vw, 24px) clamp(20px, 2.8vw, 26px);
-          border-top: 1px solid rgba(255, 255, 255, 0.06);
+          gap: 12px;
+          padding: clamp(20px, 2.5vw, 26px) 2px 0;
         }
         .news-meta {
           margin: 0;
-          font-size: 11px;
+          font-size: 10px;
           font-weight: 700;
-          letter-spacing: 0.12em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: var(--muted);
+          color: rgba(231,76,60,0.78);
         }
         .news-card-title {
           margin: 0;
-          font-family: var(--font-display);
+          font-family: var(--font-body);
           font-size: clamp(1.15rem, 2.2vw, 1.35rem);
-          font-weight: 800;
-          letter-spacing: -0.01em;
+          font-weight: 700;
+          letter-spacing: -0.025em;
           color: #fff;
-          line-height: 1.2;
+          line-height: 1.3;
+          transition: color 0.2s ease;
         }
         .news-excerpt {
           margin: 0;
           flex: 1 1 auto;
           font-size: 14px;
           line-height: 1.65;
-          color: var(--silver);
+          color: rgba(232,232,232,0.62);
         }
         .news-footnote {
           margin: clamp(36px, 5vw, 48px) 0 0;

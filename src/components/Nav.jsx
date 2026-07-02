@@ -120,7 +120,7 @@ export default function Nav() {
         <div style={{
           position: 'fixed', top: 10, left: 12, right: 12, zIndex: 1000,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 10px', height: 60, boxSizing: 'border-box',
+          padding: '0 14px', height: 68, boxSizing: 'border-box',
           background: DARK_PILL,
           backdropFilter: 'blur(20px) saturate(130%)',
           WebkitBackdropFilter: 'blur(20px) saturate(130%)',
@@ -134,7 +134,7 @@ export default function Nav() {
         }}>
           <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
             <img src={logo} alt="Suhaili Security"
-              style={{ height: 80, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))' }} />
+              style={{ height: 65, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))' }} />
           </Link>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -144,7 +144,7 @@ export default function Nav() {
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             >
-              <svg className={`nav-ham hamRotate${menuOpen ? ' active' : ''}`} viewBox="0 0 100 100" width="36" height="36">
+              <svg className={`nav-ham hamRotate${menuOpen ? ' active' : ''}`} viewBox="0 0 100 100" width="24" height="24">
                 <path className="line top" d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20" />
                 <path className="line middle" d="m 70,50 h -40" />
                 <path className="line bottom" d="m 30,67 h 40 c 0,0 8.5,0.149796 8.5,-8.5 0,-8.649796 -8.5,-8.5 -8.5,-8.5 h -20 v 20" />
@@ -168,7 +168,7 @@ export default function Nav() {
               transition={{ duration: 0.2 }}
               onClick={e => e.stopPropagation()}
               style={{
-                position: 'fixed', top: 80, left: 12, right: 12, zIndex: 999,
+                position: 'fixed', top: 88, left: 12, right: 12, zIndex: 999,
                 background: DARK_PILL,
                 backdropFilter: 'blur(24px) saturate(130%)',
                 WebkitBackdropFilter: 'blur(24px) saturate(130%)',
@@ -401,14 +401,15 @@ function LangButton({ lang, onToggle }) {
       onClick={handleClick}
       style={{
         position: 'relative',
-        display: 'inline-flex', alignItems: 'center', gap: 7,
-        padding: '7px 14px', borderRadius: 999, border: '1px solid rgba(255,255,255,0.12)',
+        display: 'inline-flex', alignItems: 'center', gap: 8,
+        padding: '9px 16px', borderRadius: 999, border: '1.5px solid rgba(192,57,43,0.7)',
         fontSize: 13, fontWeight: 700, letterSpacing: '0.08em',
         whiteSpace: 'nowrap', cursor: 'pointer', color: 'var(--silver-lt)',
         background: 'linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
         backdropFilter: 'blur(14px) saturate(1.4)',
         WebkitBackdropFilter: 'blur(14px) saturate(1.4)',
         boxShadow: [
+          '0 0 0 1px rgba(192,57,43,0.25)',
           '0 3px 12px rgba(0,0,0,0.35)',
           'inset 0 1px 0 rgba(255,255,255,0.1)',
           'inset 0 -1px 0 rgba(0,0,0,0.2)',
@@ -417,13 +418,13 @@ function LangButton({ lang, onToggle }) {
         transition: 'box-shadow 0.2s, border-color 0.2s',
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.boxShadow = '0 0 0 2px rgba(192,57,43,0.5), 0 4px 16px rgba(192,57,43,0.15), inset 0 1px 0 rgba(255,255,255,0.1)'
-        e.currentTarget.style.borderColor = 'rgba(192,57,43,0.4)'
+        e.currentTarget.style.boxShadow = '0 0 0 2px rgba(192,57,43,0.55), 0 4px 16px rgba(192,57,43,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'
+        e.currentTarget.style.borderColor = 'rgba(192,57,43,0.9)'
         gsap.to(e.currentTarget, { scale: 1.06, duration: 0.18, ease: 'power2.out' })
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.boxShadow = '0 3px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.2)'
-        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'
+        e.currentTarget.style.boxShadow = '0 0 0 1px rgba(192,57,43,0.25), 0 3px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.2)'
+        e.currentTarget.style.borderColor = 'rgba(192,57,43,0.7)'
         gsap.to(e.currentTarget, { scale: 1, duration: 0.22, ease: 'power2.out' })
       }}
     >

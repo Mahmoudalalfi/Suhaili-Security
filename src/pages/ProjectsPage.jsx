@@ -9,29 +9,15 @@ gsap.registerPlugin(ScrollTrigger)
 const CDN = 'https://res.cloudinary.com/df7obwqcy/image/upload'
 
 const PROJECT_ITEMS = [
-  { id: 'p1', image: `${CDN}/v1777671139/Mascot4_xccqdp.png` },
-  { id: 'p2', image: `${CDN}/v1777654834/project-logistics-cctv_nqt4ml.png` },
-  { id: 'p3', image: `${CDN}/v1777654836/project-vip-protection_aoqpin.png` },
-  { id: 'p4', image: `${CDN}/v1777654840/project-cctv-monitoring_xv7nh1.png` },
-  { id: 'p5', image: `${CDN}/v1777654833/project-event-security_eyhkbo.png` },
-  { id: 'p6', image: `${CDN}/v1777654845/project-hotel-lobby_qz7n64.png` },
-  { id: 'p7', image: `${CDN}/v1777654833/project-alarm-response_bg9r45.png` },
-  { id: 'p8', image: `${CDN}/v1777654844/project-patrol-night_mphxnx.png` },
+  { id: 'p1', image: `${CDN}/v1782971473/ProjectHome1_od6eox.png` },
+  { id: 'p2', image: `${CDN}/v1782971538/ProjectHome2_y1oeky.png` },
+  { id: 'p3', image: `${CDN}/v1782972057/VIPER_r7oivw.png` },
+  { id: 'p4', image: `${CDN}/v1782972141/NEXUS_wysivw.png` },
+  { id: 'p5', image: `${CDN}/v1782972282/GALA_resnv5.png` },
+  { id: 'p6', image: `${CDN}/v1782973065/LOBBY_lofldb.png` },
+  { id: 'p7', image: `${CDN}/v1782972990/STRIKE_ejtjx5.png` },
+  { id: 'p8', image: `${CDN}/v1782972990/GHOST_j3iuce.png` },
 ]
-
-function ProjectArrowIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M7 7h10v10M17 7L7 17"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
 
 export default function ProjectsPage() {
   const { t, lang } = useLanguage()
@@ -293,28 +279,6 @@ export default function ProjectsPage() {
                     }}
                   />
                   <div
-                    className="project-card-arrow-wrap"
-                    aria-hidden
-                    style={{
-                      position: 'absolute',
-                      top: 16,
-                      right: 16,
-                      width: 44,
-                      height: 44,
-                      borderRadius: '50%',
-                      background: 'rgba(255,255,255,0.96)',
-                      color: '#111',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 18px rgba(0,0,0,0.25)',
-                      transition: 'transform 0.3s ease, background 0.25s ease',
-                      pointerEvents: 'none',
-                    }}
-                  >
-                    <ProjectArrowIcon />
-                  </div>
-                  <div
                     style={{
                       position: 'absolute',
                       left: 0,
@@ -381,11 +345,6 @@ export default function ProjectsPage() {
         @media (hover: hover) and (pointer: fine) {
           .project-card:hover img {
             transform: scale(1.04);
-          }
-          .project-card:hover .project-card-arrow-wrap {
-            transform: scale(1.06);
-            background: rgba(255, 255, 255, 1);
-            color: var(--red);
           }
         }
         .project-card:focus-visible {
@@ -458,9 +417,6 @@ export default function ProjectsPage() {
         }
         @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
           .project-card:hover img {
-            transform: none;
-          }
-          .project-card:hover .project-card-arrow-wrap {
             transform: none;
           }
         }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,16 +17,34 @@ html { scroll-behavior: auto; background-color: var(--bg); }
   --border:    #1e1e1e;
   --border-lt: #2a2a2a;
   --font-display: 'Barlow Condensed', sans-serif;
-  --font-body:    'Inter', sans-serif;
+  --font-body:    'Manrope', sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --line-body: 1.65;
+  --line-heading: 1.05;
 }
 
 body {
   font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--line-body);
   background: var(--bg);
   color: var(--silver-lt);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-style: normal;
+  text-wrap: balance;
+}
+
+p, li, span, a, label, input, textarea, button {
+  font-style: normal;
 }
 
 #root {
@@ -80,9 +98,9 @@ button { border: none; background: none; cursor: pointer; font: inherit; padding
   cursor: pointer;
   text-decoration: none;
   font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #fff !important;
   /* glass layering */

@@ -227,24 +227,24 @@ function FlickerGrid({ width = 44, height = 44, x = -1, y = -1 }) {
 /* ─────────────── Services ─────────────── */
 const CAROUSEL_SERVICES = {
   de: [
-    { icon: <ShieldIcon />,     title: 'Sicherheitsdienst',    desc: 'Zuverlässige Sicherheitslösungen für Objekte, Unternehmen und Veranstaltungen.' },
-    { icon: <BuildingIcon />,   title: 'Objektschutz',         desc: 'Schutz und Überwachung Ihres Objekts durch geschultes Personal – diskret, aufmerksam und professionell.' },
-    { icon: <DeskIcon />,       title: 'Facility Management',  desc: 'Koordination und Verwaltung Ihrer Liegenschaft für einen reibungslosen Alltag.' },
-    { icon: <CctvIcon />,       title: 'CCTV Überwachung',     desc: 'Modernste Videoüberwachung für Gebäude und Außenbereiche.' },
-    { icon: <UserShieldIcon />, title: 'VIP-Schutz',           desc: 'Diskreter Personenschutz für Führungskräfte und Privatpersonen.' },
-    { icon: <EventIcon />,      title: 'Veranstaltungsschutz', desc: 'Professionelle Sicherheit für Events, Messen und Konzerte.' },
-    { icon: <PatrolIcon />,     title: 'Hausmeisterservice',   desc: 'Wartung, Überwachung und Betreuung von Gebäuden und Außenanlagen.' },
-    { icon: <BuildingIcon />,   title: 'Streifendienst',       desc: 'Regelmäßige Kontrollgänge und mobile Einsatzbereitschaft.' },
+    { icon: <ShieldIcon />,      title: 'Sicherheitsdienst',    desc: 'Zuverlässige Sicherheitslösungen für Objekte, Unternehmen und Veranstaltungen.' },
+    { icon: <BuildingIcon />,    title: 'Objektschutz',         desc: 'Schutz und Überwachung Ihres Objekts durch geschultes Personal – diskret, aufmerksam und professionell.' },
+    { icon: <FacilityIcon />,    title: 'Facility Management',  desc: 'Koordination und Verwaltung Ihrer Liegenschaft für einen reibungslosen Alltag.' },
+    { icon: <CctvIcon />,        title: 'CCTV Überwachung',     desc: 'Modernste Videoüberwachung für Gebäude und Außenbereiche.' },
+    { icon: <UserShieldIcon />,  title: 'VIP-Schutz',           desc: 'Diskreter Personenschutz für Führungskräfte und Privatpersonen.' },
+    { icon: <EventIcon />,       title: 'Veranstaltungsschutz', desc: 'Professionelle Sicherheit für Events, Messen und Konzerte.' },
+    { icon: <HausmeisterIcon />, title: 'Hausmeisterservice',   desc: 'Wartung, Überwachung und Betreuung von Gebäuden und Außenanlagen.' },
+    { icon: <PatrolIcon />,      title: 'Streifendienst',       desc: 'Regelmäßige Kontrollgänge und mobile Einsatzbereitschaft.' },
   ],
   en: [
-    { icon: <ShieldIcon />,     title: 'Security Services',    desc: 'Reliable security solutions for properties, businesses, and events.' },
-    { icon: <BuildingIcon />,   title: 'Property Protection',  desc: 'Protection and supervision of your property by trained staff – discreet, attentive, and professional.' },
-    { icon: <DeskIcon />,       title: 'Facility Management',  desc: 'Coordination and management of your property for smooth day-to-day operations.' },
-    { icon: <CctvIcon />,       title: 'CCTV Surveillance',    desc: 'Modern video surveillance for buildings and outdoor areas.' },
-    { icon: <UserShieldIcon />, title: 'VIP Security',         desc: 'Discreet personal protection for executives and private clients.' },
-    { icon: <EventIcon />,      title: 'Event Security',       desc: 'Professional security for events, trade fairs and concerts.' },
-    { icon: <PatrolIcon />,     title: 'Caretaking Service',   desc: 'Maintenance, monitoring, and support services for buildings and outdoor facilities.' },
-    { icon: <BuildingIcon />,   title: 'Patrol Service',       desc: 'Regular inspection rounds and mobile rapid response.' },
+    { icon: <ShieldIcon />,      title: 'Security Services',    desc: 'Reliable security solutions for properties, businesses, and events.' },
+    { icon: <BuildingIcon />,    title: 'Property Protection',  desc: 'Protection and supervision of your property by trained staff – discreet, attentive, and professional.' },
+    { icon: <FacilityIcon />,    title: 'Facility Management',  desc: 'Coordination and management of your property for smooth day-to-day operations.' },
+    { icon: <CctvIcon />,        title: 'CCTV Surveillance',    desc: 'Modern video surveillance for buildings and outdoor areas.' },
+    { icon: <UserShieldIcon />,  title: 'VIP Security',         desc: 'Discreet personal protection for executives and private clients.' },
+    { icon: <EventIcon />,       title: 'Event Security',       desc: 'Professional security for events, trade fairs and concerts.' },
+    { icon: <HausmeisterIcon />, title: 'Caretaking Service',   desc: 'Maintenance, monitoring, and support services for buildings and outdoor facilities.' },
+    { icon: <PatrolIcon />,      title: 'Patrol Service',       desc: 'Regular inspection rounds and mobile rapid response.' },
   ],
 }
 
@@ -332,8 +332,8 @@ function ServiceCard2({ icon, title, desc }) {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         <p style={{
-          fontFamily: 'var(--font-display)', fontSize: 'clamp(13px, 1.4vw, 16px)', fontWeight: 800,
-          letterSpacing: '0.06em', color: '#fff', textTransform: 'uppercase',
+          fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 1.5vw, 18px)', fontWeight: 400,
+          letterSpacing: '0.1em', color: '#fff', textTransform: 'uppercase',
           lineHeight: 1.2, margin: 0,
         }}>
           {title}
@@ -367,6 +367,16 @@ function ServiceGridTicker({ lang }) {
       </div>
       <style>{`
         @media (max-width: 960px) { .svc-static-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        .hero-br-mobile { display: none; }
+        @media (max-width: 600px) {
+          .svc-static-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+          .hero-headline { font-size: 7vw !important; white-space: normal !important; line-height: 1.05 !important; letter-spacing: -0.01em !important; }
+          .hero-headline-red { font-size: 8.5vw !important; white-space: nowrap !important; overflow: visible !important; }
+          .hero-br-mobile { display: block !important; }
+          .hero-sub { font-size: 12px !important; margin-bottom: 12px !important; max-width: 90% !important; }
+          .hero-buttons { gap: 8px !important; margin-bottom: 28px !important; flex-wrap: nowrap !important; }
+          .hero-content { padding: 0 clamp(16px, 4vw, 28px) !important; overflow: visible !important; }
+        }
       `}</style>
     </div>
   )
@@ -508,14 +518,14 @@ function Testimonials({ lang }) {
       <div style={{ textAlign: 'center', marginBottom: 'clamp(40px,6vw,64px)', padding: '0 24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 16 }}>
           <span style={{ display: 'block', width: 28, height: 2, background: '#c0392b', borderRadius: 2 }} />
-          <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#c0392b', fontFamily: 'var(--font-display)' }}>
+          <span style={{ fontSize: 13, fontWeight: 400, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#c0392b', fontFamily: 'var(--font-display)' }}>
             {lang === 'de' ? 'Kundenstimmen' : 'Client Reviews'}
           </span>
           <span style={{ display: 'block', width: 28, height: 2, background: '#c0392b', borderRadius: 2 }} />
         </div>
         <h2 style={{
-          margin: 0, fontFamily: 'var(--font-display)', fontWeight: 900,
-          fontSize: 'clamp(32px,5vw,64px)', letterSpacing: '-0.03em',
+          margin: 0, fontFamily: 'var(--font-display)', fontWeight: 400,
+          fontSize: 'clamp(36px,5.5vw,72px)', letterSpacing: '0.04em',
           lineHeight: 1.0, textTransform: 'uppercase', color: '#fff',
         }}>
           {lang === 'de' ? <>Zuverlässigkeit,<br />die man spürt.</> : <>Reliability you<br />can feel.</>}
@@ -623,9 +633,9 @@ function ShowcaseCard({ id, lang }) {
           }}>{category}</p>
           <h3 style={{
             margin: 0,
-            fontFamily: 'var(--font-display)', fontWeight: 700,
-            fontSize: 'clamp(16px,2vw,22px)', letterSpacing: '-0.01em',
-            color: '#fff', lineHeight: 1.2,
+            fontFamily: 'var(--font-display)', fontWeight: 400,
+            fontSize: 'clamp(17px,2vw,24px)', letterSpacing: '0.06em',
+            color: '#fff', lineHeight: 1.15,
           }}>{title}</h3>
         </div>
       </div>
@@ -645,14 +655,14 @@ function ServicesShowcase({ lang }) {
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 'clamp(24px,3vw,44px)', flexWrap: 'wrap', gap: 12 }}>
         <h2 style={{
           margin: 0,
-          fontFamily: 'var(--font-display)', fontWeight: 900,
-          fontSize: 'clamp(28px,4vw,52px)', letterSpacing: '-0.03em',
-          lineHeight: 1.05, textTransform: 'uppercase', color: '#fff',
+          fontFamily: 'var(--font-display)', fontWeight: 400,
+          fontSize: 'clamp(32px,4.5vw,60px)', letterSpacing: '0.04em',
+          lineHeight: 1.0, textTransform: 'uppercase', color: '#fff',
         }}>
           {lang === 'de' ? <>Ausgewählte Projekte<br />& Referenzen</> : <>Selected Projects<br />& References</>}
         </h2>
         <Link
-          to="/services"
+          to="/projects"
           style={{
             fontSize: 13, fontWeight: 500,
             color: 'rgba(255,255,255,0.45)',
@@ -661,7 +671,7 @@ function ServicesShowcase({ lang }) {
             paddingBottom: 4,
           }}
         >
-          {lang === 'de' ? 'Alle Leistungen anzeigen' : 'View all projects'}
+          {lang === 'de' ? 'Alle Projekte anzeigen' : 'View all projects'}
         </Link>
       </div>
 
@@ -788,6 +798,7 @@ export default function HomePage() {
         {/* Content */}
         <div
           ref={contentRef}
+          className="hero-content"
           style={{
             position: 'relative', zIndex: 20,
             display: 'flex', flexDirection: 'column',
@@ -827,8 +838,8 @@ export default function HomePage() {
             <span style={{ display: 'block', width: 32, height: 2, background: '#c0392b', borderRadius: 2 }} />
             <span style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 11,
-              fontWeight: 700,
+              fontSize: 13,
+              fontWeight: 400,
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
               color: '#c0392b',
@@ -842,38 +853,44 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.6, ease: 'easeOut' }}
+            className="hero-headline"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(26px, 5.5vw, 72px)',
-              fontWeight: 900,
-              letterSpacing: '-0.04em',
+              fontSize: 'clamp(44px, 6vw, 80px)',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
               lineHeight: 0.95,
               textTransform: 'uppercase',
               color: '#fff',
               textShadow: '0 2px 40px rgba(0,0,0,0.8)',
               marginBottom: 2,
-              whiteSpace: 'nowrap',
             }}
           >
-            {lang === 'de' ? 'Ihr zuverlässiger Partner für' : 'Your Reliable Partner for'}
+            {lang === 'de'
+              ? <><span className="hero-line1-de">Ihr zuverlässiger</span><br className="hero-br-mobile" /><span> Partner für</span></>
+              : 'Your Reliable Partner for'}
           </motion.div>
 
-          {/* Rotating text — single line, never wraps */}
+          {/* Rotating text — fixed height so layout never shifts */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.6, ease: 'easeOut' }}
+            className="hero-headline hero-headline-red"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(26px, 5.5vw, 72px)',
-              fontWeight: 900,
-              letterSpacing: '-0.04em',
+              fontSize: 'clamp(36px, 5vw, 80px)',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
               lineHeight: 1.05,
               textTransform: 'uppercase',
               color: '#e8402a',
               marginBottom: 'clamp(12px, 2vh, 22px)',
               whiteSpace: 'nowrap',
-              overflow: 'hidden',
+              overflow: 'visible',
+              minHeight: '1.1em',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
             <TextRotate
@@ -903,6 +920,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.55, ease: 'easeOut' }}
+            className="hero-sub"
             style={{
               fontSize: 'clamp(12px, 1.5vw, 17px)',
               fontWeight: 300,
@@ -921,87 +939,24 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.75, duration: 0.5, ease: 'easeOut' }}
-            style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}
+            className="hero-buttons"
+            style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginBottom: 'clamp(70px, 12vh, 110px)' }}
           >
             <LiquidButton
               as={Link} to="/services"
               tint="rgba(192,57,43,0.85)" textColor="#fff"
-              style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase' }}
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(10px, 2.8vw, 15px)', letterSpacing: '0.12em', textTransform: 'uppercase', padding: 'clamp(7px, 1.8vw, 11px) clamp(13px, 3.5vw, 26px)' }}
             >
               {t('home.heroCta1')}
             </LiquidButton>
             <LiquidButton
               as={Link} to="/contact"
-              style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase' }}
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(10px, 2.8vw, 15px)', letterSpacing: '0.12em', textTransform: 'uppercase', padding: 'clamp(7px, 1.8vw, 11px) clamp(13px, 3.5vw, 26px)' }}
             >
               {t('home.heroCta2')} →
             </LiquidButton>
           </motion.div>
 
-          {/* Trust badges */}
-          <GyroTiltCard style={{ marginTop: 'clamp(14px, 2.2vh, 26px)', marginBottom: 'clamp(70px, 12vh, 100px)', borderRadius: 14 }}>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.0, duration: 0.8 }}
-            style={{
-              display: 'flex', gap: 0, marginTop: 0,
-              alignItems: 'stretch',
-              background: 'rgba(255,255,255,0.035)',
-              border: '1px solid rgba(255,255,255,0.07)',
-              borderRadius: 14,
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              overflow: 'hidden',
-              width: '100%',
-              boxSizing: 'border-box',
-            }}
-          >
-            {[
-              { num: '15+', label: lang === 'de' ? 'Jahre Erfahrung' : 'Years Experience' },
-              { num: '500+', label: lang === 'de' ? 'Projekte' : 'Projects' },
-              { num: '24/7', label: lang === 'de' ? 'Verfügbar' : 'Available' },
-            ].map(({ num, label }, i) => (
-              <div key={num} style={{
-                display: 'flex', flexDirection: 'column', gap: 4,
-                padding: '12px 16px',
-                flex: '1 1 0',
-                minWidth: 0,
-                borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none',
-                position: 'relative',
-              }}>
-                <div style={{
-                  position: 'absolute', top: 0, left: 0, right: 0, height: 2,
-                  background: i === 0
-                    ? 'linear-gradient(90deg, rgba(192,57,43,0.9) 0%, rgba(192,57,43,0.2) 100%)'
-                    : i === 1
-                      ? 'linear-gradient(90deg, rgba(192,57,43,0.4) 0%, rgba(192,57,43,0.8) 50%, rgba(192,57,43,0.4) 100%)'
-                      : 'linear-gradient(90deg, rgba(192,57,43,0.2) 0%, rgba(192,57,43,0.9) 100%)',
-                }} />
-                <span style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(18px, 5vw, 28px)',
-                  fontWeight: 800,
-                  color: '#fff',
-                  letterSpacing: '-0.03em',
-                  lineHeight: 1,
-                  textShadow: '0 0 20px rgba(192,57,43,0.4)',
-                  whiteSpace: 'nowrap',
-                }}>{num}</span>
-                <span style={{
-                  fontSize: 'clamp(8px, 2vw, 9px)',
-                  fontWeight: 600,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.38)',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}>{label}</span>
-              </div>
-            ))}
-          </motion.div>
-          </GyroTiltCard>
         </div>
 
         {/* ── Scroll indicator ── */}
@@ -1046,66 +1001,82 @@ export default function HomePage() {
 /* ── Icons ── */
 function ShieldIcon({ size = 22 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"
-        stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
-      <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.75"/>
     </svg>
   )
 }
 function BuildingIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="3" width="18" height="18" rx="1" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M9 21V9h6v12" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
-      <path d="M3 9h18" stroke="currentColor" strokeWidth="1.7" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 22V4a2 2 0 012-2h8a2 2 0 012 2v18" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M2 22h20" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M15 22v-4a3 3 0 00-6 0v4" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M9 8h.01M15 8h.01M9 12h.01M15 12h.01" stroke="currentColor" strokeWidth="2.2"/>
     </svg>
   )
 }
 function UserShieldIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M16 11c1.5 0 2.7 1.2 2.7 2.7v.3c0 2.6-2 4-4.7 4.9" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-      <circle cx="9" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M3 20.5c0-3 2.7-5.5 6-5.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-      <path d="M17.5 8l-2.5 2.5-1-1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 01-.68-.01C7.5 20.5 4 18 4 13V6l8-3 8 3v7z" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.75"/>
     </svg>
   )
 }
 function EventIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M16 3v4M8 3v4M3 11h18" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.75"/>
+      <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M23 21v-2a4 4 0 00-3-3.87" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M16 3.13a4 4 0 010 7.75" stroke="currentColor" strokeWidth="1.75"/>
     </svg>
   )
 }
 function CctvIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M2 8l14 4-2 5H6L4 13" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/>
-      <circle cx="19" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.7"/>
-      <path d="M16.5 5H4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
-      <path d="M9 17v3M15 17v3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M23 7l-7 5 7 5V7z" stroke="currentColor" strokeWidth="1.75"/>
+      <rect x="1" y="5" width="15" height="14" rx="2" stroke="currentColor" strokeWidth="1.75"/>
     </svg>
   )
 }
 function PatrolIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.7"/>
-      <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
-      <path d="M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M11 8v3l2 2" stroke="currentColor" strokeWidth="1.75"/>
+    </svg>
+  )
+}
+function FacilityIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M8 21h8M12 17v4" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M7 8h.01M12 8h.01M17 8h.01" stroke="currentColor" strokeWidth="2.5"/>
+      <path d="M7 12h10" stroke="currentColor" strokeWidth="1.75"/>
+    </svg>
+  )
+}
+function HausmeisterIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 20h9" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" strokeWidth="1.75"/>
     </svg>
   )
 }
 function DeskIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <rect x="2" y="7" width="20" height="11" rx="1" stroke="currentColor" strokeWidth="1.7"/>
-      <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" strokeWidth="1.7"/>
-      <path d="M2 13h20" stroke="currentColor" strokeWidth="1.7"/>
-      <path d="M10 13v5M14 13v5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="7" width="20" height="11" rx="1" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M2 13h20" stroke="currentColor" strokeWidth="1.75"/>
+      <path d="M10 13v5M14 13v5" stroke="currentColor" strokeWidth="1.75"/>
     </svg>
   )
 }

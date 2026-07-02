@@ -123,7 +123,7 @@ const TextRotate = forwardRef(
 
     return (
       <motion.span
-        style={{ display: 'inline-flex', flexWrap: 'wrap', whiteSpace: 'pre-wrap', ...props.style }}
+        style={{ display: 'inline-flex', flexWrap: 'nowrap', whiteSpace: 'nowrap', ...props.style }}
         layout
         transition={transition}
         {...props}
@@ -134,7 +134,7 @@ const TextRotate = forwardRef(
         <AnimatePresence mode={animatePresenceMode} initial={animatePresenceInitial}>
           <motion.div
             key={currentTextIndex}
-            style={{ display: 'inline-flex', flexWrap: 'wrap' }}
+            style={{ display: 'inline-flex', flexWrap: 'nowrap' }}
             layout
             aria-hidden="true"
           >

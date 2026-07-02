@@ -35,13 +35,15 @@ function PageTransition({ children }) {
 
   useEffect(() => {
     if (!el.current) return
+    // Reset both native scroll and Lenis virtual scroll
     window.scrollTo(0, 0)
     document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true })
     gsap.fromTo(el.current,
       { opacity: 0, y: 16 },
       { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', clearProps: 'all' }
     )
-    // Recalculate all scroll trigger positions after the new page renders
     requestAnimationFrame(() => ScrollTrigger.refresh())
   }, [location.pathname])
 
@@ -84,7 +86,9 @@ function LenisProvider() {
       wheelMultiplier: 1.2,
     })
 
-    // Keep a stable reference so the ticker callback can be removed cleanly
+    // Expose globally so PageTransition can reset scroll position
+    window.__lenis = lenis
+
     const onTick = (time) => lenis.raf(time * 1000)
     gsap.ticker.add(onTick)
     gsap.ticker.lagSmoothing(0)
@@ -92,6 +96,7 @@ function LenisProvider() {
     return () => {
       gsap.ticker.remove(onTick)
       lenis.destroy()
+      window.__lenis = null
     }
   }, [])
 
