@@ -304,10 +304,10 @@ export default function ProjectsPage() {
                     <p
                       style={{
                         margin: 0,
-                        fontFamily: 'var(--font-display)',
+                        fontFamily: 'var(--font-body)',
                         fontSize: 'clamp(1.15rem, 2.2vw, 1.45rem)',
-                        fontWeight: 800,
-                        letterSpacing: '0.02em',
+                        fontWeight: 700,
+                        letterSpacing: '-0.025em',
                         color: '#fff',
                         lineHeight: 1.2,
                         textShadow: '0 2px 16px rgba(0,0,0,0.5)',

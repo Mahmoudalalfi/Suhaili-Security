@@ -59,6 +59,14 @@ export default function Nav() {
 
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
+  // Blur whatever element gained focus during navigation — prevents lingering
+  // focus ring/shadow on the previously-clicked nav link (PC mouse clicks).
+  useEffect(() => {
+    if (document.activeElement && document.activeElement !== document.body) {
+      document.activeElement.blur()
+    }
+  }, [pathname])
+
   useEffect(() => {
     lastY.current = window.scrollY
     const onScroll = () => {
@@ -327,7 +335,9 @@ export default function Nav() {
               width: 36, height: 36, borderRadius: 999,
               background: 'transparent', textDecoration: 'none',
               position: 'relative', zIndex: 1, flexShrink: 0,
+              outline: 'none',
             }}
+            onClick={e => e.currentTarget.blur()}
             onMouseEnter={e => { if (pathname !== '/') e.currentTarget.style.background = 'rgba(255,255,255,0.07)' }}
             onMouseLeave={e => { if (pathname !== '/') e.currentTarget.style.background = 'transparent' }}
           >
@@ -349,7 +359,9 @@ export default function Nav() {
                   textTransform: 'uppercase', textDecoration: 'none',
                   position: 'relative', zIndex: 1,
                   transition: 'color 0.18s ease',
+                  outline: 'none',
                 }}
+                onClick={e => e.currentTarget.blur()}
                 onMouseEnter={e => {
                   if (!active) {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.07)'

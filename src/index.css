@@ -55,6 +55,15 @@ img, video { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { border: none; background: none; cursor: pointer; font: inherit; padding: 0; }
 
+/* Remove the lingering focus shadow/outline after mouse clicks on links & buttons.
+   :focus-visible keeps the ring for keyboard navigation (Tab key). */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
 /* ── Ticker ── */
 @keyframes ticker {
   from { transform: translateX(0); }
