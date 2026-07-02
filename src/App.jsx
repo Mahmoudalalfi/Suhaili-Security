@@ -35,16 +35,28 @@ function PageTransition({ children }) {
 
   useEffect(() => {
     if (!el.current) return
-    // Reset both native scroll and Lenis virtual scroll
-    window.scrollTo(0, 0)
+
+    // Stop Lenis so it doesn't fight native scroll
+    if (window.__lenis) window.__lenis.stop()
+
+    // Force scroll to top via every available method
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
     if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true })
+
+    // Run page-in animation
     gsap.fromTo(el.current,
       { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', clearProps: 'all' }
+      {
+        opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', clearProps: 'all',
+        onComplete: () => {
+          // Re-enable Lenis after animation finishes
+          if (window.__lenis) window.__lenis.start()
+          ScrollTrigger.refresh()
+        }
+      }
     )
-    requestAnimationFrame(() => ScrollTrigger.refresh())
   }, [location.pathname])
 
   return <div ref={el} className="page-wrapper">{children}</div>

@@ -614,13 +614,14 @@ function ShowcaseCard({ id, lang }) {
 
         {/* Arrow button — top right, exactly like reference */}
         <div style={{
-          position: 'absolute', top: 16, right: 16,
-          width: 36, height: 36, borderRadius: '50%',
+          position: 'absolute', top: '5%', right: '5%',
+          width: 'clamp(28px, 8%, 36px)', height: 'clamp(28px, 8%, 36px)', borderRadius: '50%',
           background: 'rgba(255,255,255,0.18)',
+          WebkitBackdropFilter: 'blur(6px)',
           backdropFilter: 'blur(6px)',
           border: '1px solid rgba(255,255,255,0.25)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: '#fff', fontSize: 15,
+          color: '#fff', fontSize: 'clamp(12px, 3.5%, 15px)', lineHeight: 1,
         }}>↗</div>
 
         {/* Text — bottom left, category + title */}
