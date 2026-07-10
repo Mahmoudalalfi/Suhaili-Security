@@ -1083,6 +1083,7 @@ export default function HomePage() {
             backdrop-filter: blur(18px) saturate(170%) brightness(1.1) !important;
             -webkit-backdrop-filter: blur(18px) saturate(170%) brightness(1.1) !important;
             box-shadow: 0 8px 24px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.32) !important;
+            color: #fff !important;
           }
 
           .hero-secondary-cta > span:last-child {
@@ -1108,13 +1109,13 @@ export default function HomePage() {
             content: '';
             position: absolute;
             inset: 0;
-            width: 20px;
-            height: 20px;
+            width: 26px;
+            height: 26px;
             margin: auto;
             background: currentColor;
             transform: translate(1px, -1px);
-            -webkit-mask: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.5 15.5L15.5 4.5M7.5 4.5H15.5V12.5' fill='none' stroke='black' stroke-width='1.45' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-            mask: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.5 15.5L15.5 4.5M7.5 4.5H15.5V12.5' fill='none' stroke='black' stroke-width='1.45' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg width='26' height='26' viewBox='0 0 26 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.25 18.75L18.75 7.25M10 7.25h8.75V16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg width='26' height='26' viewBox='0 0 26 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.25 18.75L18.75 7.25M10 7.25h8.75V16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
           }
 
           .hero-services-arrow::after {
