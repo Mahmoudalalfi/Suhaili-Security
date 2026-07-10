@@ -663,7 +663,7 @@ export default function HomePage() {
       const isMobile = window.innerWidth < 768
       content.style.transform = isMobile
         ? 'none'
-        : `translateY(4rem) perspective(900px) rotateX(${currentX}deg) rotateY(${currentY}deg)`
+        : `perspective(900px) rotateX(${currentX}deg) rotateY(${currentY}deg)`
 
       // nudge each camera orbit slightly with the tilt for parallax feel
       if (!isMobile) mvRefs.current.forEach((mv, i) => {
@@ -771,11 +771,11 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.6 }}
             style={{
-              height: 'clamp(100px, 14vw, 160px)',
+              height: 'clamp(90px, 11vw, 140px)',
               width: 'auto',
               objectFit: 'contain',
               filter: 'drop-shadow(0 2px 16px rgba(0,0,0,0.9)) drop-shadow(0 0 40px rgba(192,57,43,0.25))',
-              marginBottom: 'clamp(12px, 2vh, 22px)',
+              marginBottom: 'clamp(4px, 0.5vh, 8px)',
             }}
           />
 
@@ -787,7 +787,7 @@ export default function HomePage() {
             transition={{ delay: 0.25, duration: 0.5 }}
             style={{
               display: 'flex', alignItems: 'center', gap: 10,
-              marginBottom: 'clamp(8px, 1.2vh, 14px)',
+              marginBottom: 'clamp(6px, 0.8vh, 10px)',
             }}
           >
             <span style={{ display: 'block', width: 32, height: 2, background: '#c0392b', borderRadius: 2 }} />
@@ -811,10 +811,10 @@ export default function HomePage() {
             className="hero-headline"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(44px, 6vw, 80px)',
+              fontSize: 'clamp(28px, 3.2vw, 48px)',
               fontWeight: 700,
               letterSpacing: '0.04em',
-              lineHeight: 0.95,
+              lineHeight: 1.0,
               textTransform: 'uppercase',
               color: '#fff',
               textShadow: '0 2px 40px rgba(0,0,0,0.8)',
@@ -834,13 +834,13 @@ export default function HomePage() {
             className="hero-headline hero-headline-red"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(36px, 5vw, 80px)',
+              fontSize: 'clamp(28px, 3.2vw, 48px)',
               fontWeight: 700,
               letterSpacing: '0.04em',
               lineHeight: 1.05,
               textTransform: 'uppercase',
               color: '#e8402a',
-              marginBottom: 'clamp(12px, 2vh, 22px)',
+              marginBottom: 'clamp(6px, 1vh, 14px)',
               whiteSpace: 'nowrap',
               overflow: 'visible',
               minHeight: '1.1em',
@@ -866,7 +866,7 @@ export default function HomePage() {
             style={{
               width: 'clamp(60px, 8vw, 100px)', height: 1,
               background: 'linear-gradient(90deg, #c0392b, transparent)',
-              marginBottom: 'clamp(10px, 1.8vh, 18px)',
+              marginBottom: 'clamp(6px, 1vh, 12px)',
               transformOrigin: 'left',
             }}
           />
@@ -884,7 +884,7 @@ export default function HomePage() {
               lineHeight: 1.5,
               letterSpacing: '0.01em',
               maxWidth: '24em',
-              marginBottom: 'clamp(14px, 2.8vh, 30px)',
+              marginBottom: 'clamp(10px, 1.6vh, 20px)',
             }}
           >
             {t('home.heroSub')}
@@ -896,7 +896,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.75, duration: 0.5, ease: 'easeOut' }}
             className="hero-buttons"
-            style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginBottom: 'clamp(70px, 12vh, 110px)' }}
+            style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginBottom: 'clamp(28px, 5vh, 56px)' }}
           >
             <LiquidButton
               className="hero-secondary-cta"
@@ -1076,6 +1076,7 @@ export default function HomePage() {
             width: 58px !important;
             height: 58px !important;
             min-width: 58px !important;
+            min-height: 58px !important;
             padding: 0 !important;
             border: 1px solid rgba(255,255,255,0.25) !important;
             background: linear-gradient(145deg, rgba(255,255,255,0.17), rgba(255,255,255,0.045)), rgba(12,12,12,0.38) !important;
@@ -1086,11 +1087,23 @@ export default function HomePage() {
 
           .hero-services-label { display: none; }
           .hero-services-arrow {
-            display: inline !important;
+            position: relative;
+            display: grid !important;
+            place-items: center;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            font-size: 0;
+            line-height: 0;
+          }
+
+          .hero-services-arrow::before {
+            content: '\\2197';
             font-family: var(--font-body);
-            font-size: 23px;
-            font-weight: 700;
+            font-size: 31px;
+            font-weight: 400;
             line-height: 1;
+            transform: translate(1px, -2px);
           }
 
           .hero-scroll-indicator { display: none !important; }
