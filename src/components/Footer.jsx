@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import LiquidButton from './ui/LiquidButton'
 import { SERVICES_ORDER } from '../data/servicesCatalog'
+import logo from '../assets/SuhailSecurityLogo 2.png'
 
 const scrollTop = () => {
   const lenis = /** @type {any} */ (window).__lenis
@@ -9,8 +10,7 @@ const scrollTop = () => {
   else window.scrollTo(0, 0)
 }
 
-const LOGO = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
-const FOOTER_IMAGE = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1782966813/Footer_ecb4lx.png'
+const FOOTER_IMAGE = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1783329069/SuhailSecurityLogo_2_ovbjup.png'
 
 const LINKS = {
   de: [
@@ -87,7 +87,7 @@ export default function Footer() {
       <div className="footer-main-grid">
         <div className="footer-brand-column">
           <Link to="/" className="footer-logo-link">
-            <img src={LOGO} alt="Suhaili Security" />
+            <img src={logo} alt="Suhaili Security" />
           </Link>
           <p className="footer-description">
             {isGerman

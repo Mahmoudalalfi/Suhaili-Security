@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { useLanguage } from '../i18n/LanguageContext'
 import { TextRotate } from '../components/ui/text-rotate'
 import LiquidButton from '../components/ui/LiquidButton'
-const logo = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
+import logo from '../assets/SuhailSecurityLogo 2.png'
 import { SERVICE_HERO_BY_ID, SERVICES_ORDER } from '../data/servicesCatalog'
 import SERVICES_I18N from '../data/servicesPageI18n'
 
@@ -95,11 +95,8 @@ function GyroTiltCard({ children, style = {} }) {
   )
 }
 
-/* ─────────────── Hero ping-pong video ─────────────── */
-const HERO_SRCS = [
-  'https://res.cloudinary.com/df7obwqcy/video/upload/v1781797619/HeroRev_rhnvyd_ygehpw.mp4',
-  'https://res.cloudinary.com/df7obwqcy/video/upload/v1781797619/HeroRev_rhnvyd_ygehpw.mp4',
-]
+/* ─────────────── Hero video ─────────────── */
+const HERO_VIDEO = 'https://res.cloudinary.com/df7obwqcy/video/upload/v1783330652/HeroMain_ki4fps.mp4'
 
 const VIDEO_STYLE = {
   position: 'absolute', inset: 0,
@@ -110,49 +107,19 @@ const VIDEO_STYLE = {
 }
 
 function HeroBgVideo() {
-  const refs = [useRef(null), useRef(null)]
-  const activeRef = useRef(0)
-
-  useEffect(() => {
-    const [a, b] = [refs[0].current, refs[1].current]
-    if (!a || !b) return
-
-    // Pre-load both
-    a.src = HERO_SRCS[0]
-    b.src = HERO_SRCS[1]
-    b.style.opacity = '0'
-
-    function onEnded() {
-      const next = activeRef.current === 0 ? 1 : 0
-      const incoming = refs[next].current
-      const outgoing = refs[activeRef.current].current
-
-      // incoming is already fully loaded — play it instantly
-      incoming.currentTime = 0
-      incoming.style.opacity = '0.8'
-      incoming.play()
-
-      // hide outgoing after one frame so there's no gap
-      requestAnimationFrame(() => { outgoing.style.opacity = '0' })
-
-      activeRef.current = next
-    }
-
-    a.addEventListener('ended', onEnded)
-    b.addEventListener('ended', onEnded)
-    a.play()
-
-    return () => {
-      a.removeEventListener('ended', onEnded)
-      b.removeEventListener('ended', onEnded)
-    }
-  }, [])
-
   return (
-    <>
-      <video ref={refs[0]} muted playsInline preload="auto" aria-hidden style={{ ...VIDEO_STYLE }} />
-      <video ref={refs[1]} muted playsInline preload="auto" aria-hidden style={{ ...VIDEO_STYLE }} />
-    </>
+    <video
+      className="hero-bg-video"
+      src={HERO_VIDEO}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      aria-hidden
+      style={VIDEO_STYLE}
+    />
   )
 }
 
@@ -367,15 +334,8 @@ function ServiceGridTicker({ lang }) {
       </div>
       <style>{`
         @media (max-width: 960px) { .svc-static-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-        .hero-br-mobile { display: none; }
         @media (max-width: 600px) {
           .svc-static-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
-          .hero-headline { font-size: 7vw !important; white-space: normal !important; line-height: 1.05 !important; letter-spacing: -0.01em !important; }
-          .hero-headline-red { font-size: 8.5vw !important; white-space: nowrap !important; overflow: visible !important; }
-          .hero-br-mobile { display: block !important; }
-          .hero-sub { font-size: 12px !important; margin-bottom: 12px !important; max-width: 90% !important; }
-          .hero-buttons { gap: 8px !important; margin-bottom: 28px !important; flex-wrap: nowrap !important; }
-          .hero-content { padding: 0 clamp(16px, 4vw, 28px) !important; overflow: visible !important; }
         }
       `}</style>
     </div>
@@ -700,10 +660,13 @@ export default function HomePage() {
     const tick = () => {
       currentX += (targetX - currentX) * 0.08
       currentY += (targetY - currentY) * 0.08
-      content.style.transform = `translateY(4rem) perspective(900px) rotateX(${currentX}deg) rotateY(${currentY}deg)`
+      const isMobile = window.innerWidth < 768
+      content.style.transform = isMobile
+        ? 'none'
+        : `translateY(4rem) perspective(900px) rotateX(${currentX}deg) rotateY(${currentY}deg)`
 
       // nudge each camera orbit slightly with the tilt for parallax feel
-      mvRefs.current.forEach((mv, i) => {
+      if (!isMobile) mvRefs.current.forEach((mv, i) => {
         if (!mv) return
         const base = CAMERAS[i].orbitBase
         const theta = base.theta + currentY * 0.6
@@ -735,6 +698,7 @@ export default function HomePage() {
       {/* ════ HERO ════ */}
       <section
         ref={heroRef}
+        className="home-hero"
         style={{
           position: 'relative',
           minHeight: '100svh',
@@ -750,19 +714,19 @@ export default function HomePage() {
         <HeroBgVideo />
 
         {/* ── Layer 1: deep vignette all edges ── */}
-        <div aria-hidden style={{
+        <div className="hero-vignette" aria-hidden style={{
           position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
           background: 'radial-gradient(ellipse 120% 100% at 60% 50%, transparent 30%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.92) 100%)',
         }} />
 
         {/* ── Layer 2: left-side content shield ── */}
-        <div aria-hidden style={{
+        <div className="hero-content-shield" aria-hidden style={{
           position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
           background: 'linear-gradient(100deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.72) 38%, rgba(0,0,0,0.18) 62%, transparent 80%)',
         }} />
 
         {/* ── Layer 3: bottom fade to site bg ── */}
-        <div aria-hidden style={{
+        <div className="hero-bottom-fade" aria-hidden style={{
           position: 'absolute', bottom: 0, left: 0, right: 0, height: '22%', zIndex: 3, pointerEvents: 'none',
           background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.85))',
         }} />
@@ -800,6 +764,7 @@ export default function HomePage() {
         >
           {/* Logo */}
           <motion.img
+            className="hero-brand-logo"
             src={logo}
             alt="Suhaili Security"
             initial={{ opacity: 0, y: 16 }}
@@ -816,6 +781,7 @@ export default function HomePage() {
 
           {/* Eyebrow label */}
           <motion.div
+            className="hero-eyebrow"
             initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.25, duration: 0.5 }}
@@ -893,6 +859,7 @@ export default function HomePage() {
 
           {/* Divider */}
           <motion.div
+            className="hero-divider"
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ delay: 0.55, duration: 0.6, ease: 'easeOut' }}
@@ -932,13 +899,16 @@ export default function HomePage() {
             style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginBottom: 'clamp(70px, 12vh, 110px)' }}
           >
             <LiquidButton
+              className="hero-secondary-cta"
               as={Link} to="/services"
               tint="rgba(192,57,43,0.85)" textColor="#fff"
               style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(10px, 2.8vw, 15px)', letterSpacing: '0.12em', textTransform: 'uppercase', padding: 'clamp(7px, 1.8vw, 11px) clamp(13px, 3.5vw, 26px)' }}
             >
-              {t('home.heroCta1')}
+              <span className="hero-services-label">{t('home.heroCta1')}</span>
+              <span className="hero-services-arrow" aria-hidden>↗</span>
             </LiquidButton>
             <LiquidButton
+              className="hero-primary-cta"
               as={Link} to="/contact"
               style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(10px, 2.8vw, 15px)', letterSpacing: '0.12em', textTransform: 'uppercase', padding: 'clamp(7px, 1.8vw, 11px) clamp(13px, 3.5vw, 26px)' }}
             >
@@ -950,6 +920,7 @@ export default function HomePage() {
 
         {/* ── Scroll indicator ── */}
         <motion.div
+          className="hero-scroll-indicator"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.8 }}
@@ -982,6 +953,159 @@ export default function HomePage() {
 
 
       <style>{`
+        .hero-br-mobile,
+        .hero-services-arrow { display: none; }
+
+        @media (max-width: 767px) {
+          .home-hero {
+            min-height: 100svh !important;
+            justify-content: flex-end !important;
+          }
+
+          .hero-bg-video {
+            object-position: 60% center !important;
+          }
+
+          .hero-vignette {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.08) 8%, rgba(0,0,0,0.1) 34%, rgba(0,0,0,0.66) 64%, #030303 100%) !important;
+          }
+
+          .hero-content-shield {
+            background: linear-gradient(100deg, rgba(0,0,0,0.35) 0%, transparent 72%) !important;
+          }
+
+          .hero-bottom-fade { height: 48% !important; }
+
+          .hero-content {
+            position: absolute !important;
+            inset: auto 0 max(30px, env(safe-area-inset-bottom)) 0 !important;
+            width: 100% !important;
+            max-width: none !important;
+            padding: 0 clamp(22px, 6.5vw, 32px) !important;
+            overflow: visible !important;
+            transform: none !important;
+          }
+
+          .hero-brand-logo {
+            display: block !important;
+            height: clamp(104px, 31vw, 148px) !important;
+            width: auto !important;
+            max-width: min(86vw, 380px) !important;
+            margin-bottom: -18px !important;
+            object-fit: contain !important;
+          }
+
+          .hero-eyebrow {
+            gap: 0 !important;
+            margin-bottom: 14px !important;
+          }
+
+          .hero-eyebrow > span:first-child {
+            display: none !important;
+          }
+
+          .hero-eyebrow > span:last-child {
+            color: rgba(232,232,232,0.72) !important;
+            font-family: var(--font-body) !important;
+            font-size: clamp(10px, 2.8vw, 12px) !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.09em !important;
+          }
+
+          .hero-headline {
+            width: 100% !important;
+            max-width: 11em !important;
+            font-size: clamp(32px, 9.7vw, 44px) !important;
+            line-height: 0.98 !important;
+            letter-spacing: -0.015em !important;
+            white-space: normal !important;
+            text-wrap: balance;
+          }
+
+          .hero-headline-red {
+            max-width: 100% !important;
+            min-height: 1.12em !important;
+            margin-top: 7px !important;
+            margin-bottom: 17px !important;
+            color: #ef4935 !important;
+            font-size: clamp(34px, 10.4vw, 47px) !important;
+            line-height: 1 !important;
+            white-space: nowrap !important;
+            text-wrap: nowrap;
+          }
+
+          .hero-br-mobile { display: block !important; }
+          .hero-divider { display: none !important; }
+
+          .hero-sub {
+            max-width: 32em !important;
+            margin-bottom: 19px !important;
+            color: rgba(232,232,232,0.68) !important;
+            font-size: clamp(12px, 3.45vw, 14px) !important;
+            font-weight: 400 !important;
+            line-height: 1.55 !important;
+          }
+
+          .hero-buttons {
+            width: 100% !important;
+            gap: 10px !important;
+            margin-bottom: 0 !important;
+            flex-wrap: nowrap !important;
+          }
+
+          .hero-primary-cta {
+            order: 1;
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+            min-height: 58px !important;
+            padding: 16px 20px !important;
+            border: 1px solid rgba(255,126,112,0.38) !important;
+            background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(231,76,60,0.08) 42%, rgba(95,12,8,0.16)), rgba(156,35,26,0.46) !important;
+            backdrop-filter: blur(18px) saturate(185%) brightness(1.08) !important;
+            -webkit-backdrop-filter: blur(18px) saturate(185%) brightness(1.08) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(80,8,5,0.34) !important;
+            font-family: var(--font-body) !important;
+            font-size: clamp(12px, 3.5vw, 14px) !important;
+            font-weight: 700 !important;
+            letter-spacing: 0 !important;
+            text-transform: none !important;
+          }
+
+          .hero-secondary-cta {
+            order: 2;
+            width: 58px !important;
+            height: 58px !important;
+            min-width: 58px !important;
+            padding: 0 !important;
+            border: 1px solid rgba(255,255,255,0.25) !important;
+            background: linear-gradient(145deg, rgba(255,255,255,0.17), rgba(255,255,255,0.045)), rgba(12,12,12,0.38) !important;
+            backdrop-filter: blur(18px) saturate(170%) brightness(1.1) !important;
+            -webkit-backdrop-filter: blur(18px) saturate(170%) brightness(1.1) !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.32) !important;
+          }
+
+          .hero-services-label { display: none; }
+          .hero-services-arrow {
+            display: inline !important;
+            font-family: var(--font-body);
+            font-size: 23px;
+            font-weight: 700;
+            line-height: 1;
+          }
+
+          .hero-scroll-indicator { display: none !important; }
+        }
+
+        @media (max-width: 380px), (max-height: 700px) and (max-width: 767px) {
+          .hero-content { bottom: max(22px, env(safe-area-inset-bottom)) !important; }
+          .hero-brand-logo { height: clamp(78px, 25vw, 110px) !important; margin-bottom: -14px !important; }
+          .hero-eyebrow { margin-bottom: 10px !important; }
+          .hero-headline { font-size: clamp(29px, 9vw, 36px) !important; }
+          .hero-headline-red { font-size: clamp(31px, 9.6vw, 39px) !important; margin-bottom: 12px !important; }
+          .hero-sub { margin-bottom: 14px !important; line-height: 1.45 !important; }
+          .hero-primary-cta, .hero-secondary-cta { min-height: 52px !important; height: 52px !important; }
+          .hero-secondary-cta { width: 52px !important; min-width: 52px !important; }
+        }
       `}</style>
     </div>
   )

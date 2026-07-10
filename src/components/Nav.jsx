@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../i18n/LanguageContext'
-const logo = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1777654757/SuhailSecurityLogo_jay0jh.png'
+import logo from '../assets/SuhailSecurityLogo 2.png'
 
 const NAV_LINKS = [
   { key: 'nav.projects', to: '/projects' },
@@ -126,13 +126,13 @@ export default function Nav() {
     return (
       <>
         <div style={{
-          position: 'fixed', top: 10, left: 12, right: 12, zIndex: 1000,
+          position: 'fixed', top: 18, left: 18, right: 18, zIndex: 1000,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 14px', height: 68, boxSizing: 'border-box',
+          padding: '0 16px 0 13px', height: 72, boxSizing: 'border-box',
           background: DARK_PILL,
           backdropFilter: 'blur(20px) saturate(130%)',
           WebkitBackdropFilter: 'blur(20px) saturate(130%)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          border: '1px solid rgba(255,255,255,0.11)',
           borderRadius: 999,
           boxShadow: [
             '0 4px 24px rgba(0,0,0,0.5)',
@@ -142,7 +142,7 @@ export default function Nav() {
         }}>
           <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
             <img src={logo} alt="Suhaili Security"
-              style={{ height: 65, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))' }} />
+              style={{ width: 116, height: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))' }} />
           </Link>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -176,7 +176,7 @@ export default function Nav() {
               transition={{ duration: 0.2 }}
               onClick={e => e.stopPropagation()}
               style={{
-                position: 'fixed', top: 88, left: 12, right: 12, zIndex: 999,
+                position: 'fixed', top: 100, left: 18, right: 18, zIndex: 999,
                 background: DARK_PILL,
                 backdropFilter: 'blur(24px) saturate(130%)',
                 WebkitBackdropFilter: 'blur(24px) saturate(130%)',

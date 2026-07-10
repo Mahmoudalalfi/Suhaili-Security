@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
 export default function LiquidButton({
   as: Tag = 'button',
@@ -10,34 +10,20 @@ export default function LiquidButton({
 }) {
   const [pressed, setPressed] = useState(false)
   const [hovered, setHovered] = useState(false)
-  const idRef = useRef(`lg-${Math.random().toString(36).slice(2, 7)}`)
-  const filterId = idRef.current
 
   const hasTint = !!tint
-  const tintLayer = hasTint ? tint : 'rgba(255,255,255,0.18)'
+  const tintLayer = hasTint ? tint : 'rgba(255,255,255,0.14)'
   const resolvedText = textColor || (hasTint ? '#fff' : '#e8e8e8')
 
   const scale = pressed ? 0.965 : hovered ? 1.03 : 1
   const shadow = pressed
-    ? '0 1px 4px rgba(0,0,0,0.18)'
+    ? '0 2px 8px rgba(0,0,0,0.2)'
     : hovered
-    ? '0 6px 24px rgba(0,0,0,0.28), 0 0 0 1.5px rgba(255,255,255,0.18)'
-    : '0 3px 12px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.12)'
+    ? '0 10px 30px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.2)'
+    : '0 5px 18px rgba(0,0,0,0.22)'
 
   return (
-    <>
-      <svg style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }} aria-hidden>
-        <defs>
-          <filter id={filterId} x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
-            <feTurbulence type="fractalNoise" baseFrequency="0.06 0.06" numOctaves="1" seed="2" result="turb" />
-            <feGaussianBlur in="turb" stdDeviation="1.5" result="blurNoise" />
-            <feDisplacementMap in="SourceGraphic" in2="blurNoise" scale="55" xChannelSelector="R" yChannelSelector="B" result="displaced" />
-            <feGaussianBlur in="displaced" stdDeviation="3" result="finalBlur" />
-            <feComposite in="finalBlur" in2="finalBlur" operator="over" />
-          </filter>
-        </defs>
-      </svg>
-      <Tag
+    <Tag
         {...rest}
         style={{
           position: 'relative',
@@ -47,22 +33,22 @@ export default function LiquidButton({
           gap: 8,
           padding: '11px 26px',
           borderRadius: 999,
-          border: 'none',
+          border: '1px solid rgba(255,255,255,0.2)',
           cursor: 'pointer',
           textDecoration: 'none',
           userSelect: 'none',
           outline: 'none',
           background: hasTint
-            ? `linear-gradient(145deg, ${tintLayer}ee 0%, ${tintLayer}bb 100%)`
-            : 'linear-gradient(145deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%)',
-          backdropFilter: `url("#${filterId}") blur(14px) saturate(1.5)`,
-          WebkitBackdropFilter: `url("#${filterId}") blur(14px) saturate(1.5)`,
+            ? `linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.035) 42%, transparent 70%), color-mix(in srgb, ${tintLayer} 58%, transparent)`
+            : 'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.055) 45%, rgba(255,255,255,0.09))',
+          backdropFilter: 'blur(18px) saturate(175%) brightness(1.06)',
+          WebkitBackdropFilter: 'blur(18px) saturate(175%) brightness(1.06)',
           boxShadow: [
             shadow,
-            'inset 0 1px 0 rgba(255,255,255,0.22)',
-            'inset 0 -1px 0 rgba(0,0,0,0.18)',
-            'inset 1px 0 0 rgba(255,255,255,0.10)',
-            'inset -1px 0 0 rgba(255,255,255,0.06)',
+            'inset 0 1px 0 rgba(255,255,255,0.28)',
+            'inset 0 -1px 0 rgba(0,0,0,0.24)',
+            'inset 1px 0 0 rgba(255,255,255,0.12)',
+            'inset -1px 0 0 rgba(255,255,255,0.08)',
           ].join(', '),
           color: resolvedText,
           fontSize: 14,
@@ -73,6 +59,8 @@ export default function LiquidButton({
           transform: `scale(${scale})`,
           transition: 'transform 220ms cubic-bezier(0.1,0.4,0.2,1), box-shadow 220ms cubic-bezier(0.1,0.4,0.2,1), filter 220ms',
           filter: hovered && !pressed ? 'brightness(1.1)' : 'brightness(1)',
+          overflow: 'hidden',
+          isolation: 'isolate',
           ...style,
         }}
         onMouseEnter={e => { setHovered(true); rest.onMouseEnter?.(e) }}
@@ -83,13 +71,19 @@ export default function LiquidButton({
         onTouchEnd={e => { setPressed(false); rest.onTouchEnd?.(e) }}
       >
         <span aria-hidden style={{
-          position: 'absolute', top: 0, left: '12%', right: '12%', height: '38%',
-          borderRadius: '0 0 50% 50%',
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0.22) 0%, transparent 100%)',
+          position: 'absolute', inset: 1,
+          borderRadius: 'inherit',
+          background: 'linear-gradient(150deg, rgba(255,255,255,0.16) 0%, transparent 28%, transparent 68%, rgba(255,255,255,0.045) 100%)',
+          pointerEvents: 'none',
+        }} />
+        <span aria-hidden style={{
+          position: 'absolute', left: '12%', right: '12%', bottom: -12, height: 22,
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.09)',
+          filter: 'blur(9px)',
           pointerEvents: 'none',
         }} />
         <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
-      </Tag>
-    </>
+    </Tag>
   )
 }

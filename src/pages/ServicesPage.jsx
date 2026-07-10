@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -81,6 +81,84 @@ const SERVICE_CATEGORIES = [
     ],
   },
 ]
+
+function MobileServicesAccordion({ servicesList, lang, onOpenDetail, category }) {
+  const [openId, setOpenId] = useState(null)
+  const expandedItemRef = useRef(null)
+  const toggleService = id => setOpenId(current => current === id ? null : id)
+
+  useEffect(() => {
+    if (!openId) return
+
+    const closeWhenOutside = (event) => {
+      if (expandedItemRef.current && !expandedItemRef.current.contains(event.target)) {
+        setOpenId(null)
+      }
+    }
+
+    document.addEventListener('pointerdown', closeWhenOutside, true)
+    return () => document.removeEventListener('pointerdown', closeWhenOutside, true)
+  }, [openId])
+
+  const services = category.ids
+    .map(id => servicesList.find(service => service.id === id))
+    .filter(Boolean)
+
+  return (
+    <div className="svc-mobile-accordion">
+      <section className="svc-mobile-category">
+        <div className="svc-mobile-accordion-list">
+              {services.map((service) => {
+                const expanded = openId === service.id
+                return (
+                  <div
+                    key={service.id}
+                    ref={expanded ? expandedItemRef : null}
+                    className={`svc-mobile-accordion-item${expanded ? ' is-expanded' : ''}`}
+                  >
+                    <button
+                      type="button"
+                      className="svc-mobile-accordion-summary"
+                      aria-expanded={expanded}
+                      aria-controls={`mobile-service-${service.id}`}
+                      onClick={() => toggleService(service.id)}
+                    >
+                      <span className="svc-mobile-accordion-name">{service.name}</span>
+                      <span className="svc-mobile-accordion-toggle" aria-hidden>
+                        <svg viewBox="0 0 20 20" width="15" height="15" fill="none">
+                          <path d="m5 7.5 5 5 5-5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      id={`mobile-service-${service.id}`}
+                      className="svc-mobile-accordion-panel"
+                      aria-hidden={!expanded}
+                      tabIndex={expanded ? 0 : -1}
+                      onClick={() => onOpenDetail(service.id)}
+                    >
+                      <span className="svc-mobile-accordion-media">
+                        <img src={service.img} alt="" loading="lazy" />
+                        <span className="svc-mobile-accordion-shade" />
+                      </span>
+                      <span className="svc-mobile-accordion-copy">{service.teaser}</span>
+                      <span className="svc-mobile-accordion-action">
+                        {lang === 'de' ? 'Servicedetails ansehen' : 'View service details'}
+                        <svg viewBox="0 0 20 20" width="17" height="17" fill="none" aria-hidden>
+                          <path d="M4 10h11M11 6l4 4-4 4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                )
+              })}
+        </div>
+      </section>
+    </div>
+  )
+}
 
 /* ── Full-screen split showcase ── */
 function ServicesShowcase({ servicesList, lang, onOpenDetail }) {
@@ -168,11 +246,15 @@ function ServicesShowcase({ servicesList, lang, onOpenDetail }) {
           {SERVICE_CATEGORIES.map((c, i) => (
             <button
               key={c.key}
-              onClick={() => selectCat(i)}
+              onClick={(event) => {
+                selectCat(i)
+                event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+              }}
               className={`svc-showcase-tab${catIdx === i ? ' svc-showcase-tab--active' : ''}`}
             >
               <span className="svc-tab-label-long">{catLabel(c).toUpperCase()}</span>
               <span className="svc-tab-label-short">{catShort(c).toUpperCase()}</span>
+              <span className="svc-tab-count">{pad(c.ids.length)}</span>
             </button>
           ))}
         </nav>
@@ -229,26 +311,7 @@ function ServicesShowcase({ servicesList, lang, onOpenDetail }) {
         </div>
       </div>
 
-      {/* Mobile: card grid below image */}
-      <div className="svc-mobile-section">
-        <div className="svc-mobile-cards">
-          {catServices.map((s, i) => (
-            <button
-              key={s.id}
-              className={`svc-mobile-card${svcIdx === i ? ' svc-mobile-card--active' : ''}`}
-              onClick={() => onOpenDetail(s.id)}
-            >
-              <img src={s.img} alt="" className="svc-mobile-card-bg" />
-              <div className="svc-mobile-card-overlay" />
-              <div className="svc-mobile-card-body">
-                <span className="svc-mobile-card-num">{pad(i + 1)}</span>
-                <span className="svc-mobile-card-name">{s.name}</span>
-                <span className="svc-mobile-card-arrow">→</span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
+      <MobileServicesAccordion key={currentCat.key} category={currentCat} servicesList={servicesList} lang={lang} onOpenDetail={onOpenDetail} />
 
       <style>{`
         .svc-showcase-wrap { background: #0a0a0a; }
@@ -258,7 +321,7 @@ function ServicesShowcase({ servicesList, lang, onOpenDetail }) {
           display: flex;
           align-items: stretch;
           background: #0a0a0a;
-          border-bottom: 1px solid rgba(255,255,255,0.07);
+          border-bottom: 0;
         }
         .svc-tab-arrow {
           flex-shrink: 0;
@@ -308,36 +371,61 @@ function ServicesShowcase({ servicesList, lang, onOpenDetail }) {
         .svc-showcase-tab:hover { color: rgba(255,255,255,0.65); }
         .svc-showcase-tab--active { color: #fff; border-bottom-color: var(--red-light); }
         /* Long label on desktop, short on mobile */
+        .svc-tab-count { display: none; }
         .svc-tab-label-short { display: none; }
         .svc-tab-label-long { display: inline; }
         @media (max-width: 768px) {
-          .svc-tab-label-short { display: inline; }
-          .svc-tab-label-long { display: none; }
           .svc-showcase-tabs-wrap {
             padding: 0;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 0;
             background: #0a0a0a;
+            box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07);
           }
+          .svc-tab-arrow { display: none !important; }
           .svc-showcase-tabs {
-            gap: 0;
-            padding: 0;
+            gap: 24px;
+            padding: 0 18px 0 0;
+            scroll-padding-inline: 22px;
+            scroll-snap-type: x mandatory;
+            overscroll-behavior-x: contain;
           }
+          .svc-showcase-tab:first-child { margin-left: 22px; }
           .svc-showcase-tab {
             flex: 0 0 auto;
-            min-width: unset;
-            padding: 16px 15px 14px;
-            font-size: 11px;
-            border-bottom: 2px solid transparent;
+            min-width: max-content;
+            min-height: 54px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 0;
             border-radius: 0;
             background: transparent;
-            margin-bottom: -1px;
+            margin-bottom: 0;
+            color: rgba(255,255,255,0.55);
+            text-align: left;
+            white-space: nowrap;
+            scroll-snap-align: start;
+          }
+          .svc-tab-count { display: none; }
+          .svc-tab-label-long {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            line-height: 1;
+          }
+          .svc-tab-label-short { display: none; }
+          .svc-showcase-tab--active .svc-tab-label-long {
+            color: #fff;
           }
           .svc-showcase-tab--active {
             background: transparent;
             color: #fff;
             border-bottom-color: var(--red-light);
+            box-shadow: inset 0 -2px 0 var(--red-light);
           }
-          /* On mobile hide the desktop split hero — show only the card grid */
+          /* On mobile hide the desktop split hero — show the accordion below the tabs. */
           .svc-showcase-split { display: none !important; }
         }
 
@@ -423,61 +511,177 @@ function ServicesShowcase({ servicesList, lang, onOpenDetail }) {
         .svc-showcase-list-item:hover .svc-showcase-list-arrow,
         .svc-showcase-list-item--active .svc-showcase-list-arrow { color: var(--red-light); transform: translateX(4px); }
 
-        /* Mobile card grid */
-        .svc-mobile-section { display: none; background: #0a0a0a; padding: 0 0 4px; }
+        /* Mobile category accordion */
+        .svc-mobile-accordion { display: none; }
         @media (max-width: 768px) {
-          .svc-mobile-section { display: block; }
+          .svc-mobile-accordion {
+            display: block;
+            padding: 4px 20px 28px;
+            background: #080808;
+          }
+          .svc-mobile-category { padding: 8px 0 5px; }
+          .svc-mobile-category + .svc-mobile-category {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin-top: 20px;
+          }
+          .svc-mobile-category-heading {
+            display: grid;
+            grid-template-columns: 30px minmax(0, 1fr) auto;
+            align-items: end;
+            gap: 10px;
+            margin-bottom: 12px;
+          }
+          .svc-mobile-category-heading h2 {
+            margin: 0;
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: clamp(22px, 7vw, 29px);
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            line-height: 0.95;
+            text-transform: uppercase;
+          }
+          .svc-mobile-category-index,
+          .svc-mobile-category-count {
+            font-family: var(--font-display);
+            font-size: 12px;
+            letter-spacing: 0.13em;
+          }
+          .svc-mobile-category-index { color: var(--red-light); }
+          .svc-mobile-category-count { color: rgba(255,255,255,0.28); }
+          .svc-mobile-accordion-list {
+            display: grid;
+            gap: 0;
+            border-top: 0;
+          }
+          .svc-mobile-accordion-item {
+            display: block;
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
+            border: 0;
+            border-bottom: 0;
+            border-radius: 0;
+            background: transparent;
+            color: #fff;
+            text-align: left;
+            -webkit-tap-highlight-color: transparent;
+          }
+          .svc-mobile-accordion-summary {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 22px;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            min-height: 54px;
+            padding: 8px 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            text-align: left;
+          }
+          .svc-mobile-accordion-name {
+            color: rgba(255,255,255,0.78);
+            font-family: var(--font-display);
+            font-size: clamp(16px, 4.5vw, 18px);
+            font-weight: 500;
+            letter-spacing: 0.025em;
+            line-height: 1.08;
+            transition: color 0.25s ease;
+          }
+          .svc-mobile-accordion-toggle {
+            display: grid;
+            place-items: center;
+            width: 22px;
+            height: 22px;
+            border: 0;
+            border-radius: 0;
+            color: rgba(255,255,255,0.62);
+            transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.75, 0.2, 1);
+          }
+          .svc-mobile-accordion-panel {
+            display: grid;
+            grid-template-rows: 0fr;
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            text-align: left;
+            opacity: 0;
+            visibility: hidden;
+            transition: grid-template-rows 0.42s cubic-bezier(0.2, 0.75, 0.2, 1), opacity 0.28s ease, visibility 0.42s;
+          }
+          .svc-mobile-accordion-panel > * { min-height: 0; }
+          .svc-mobile-accordion-media,
+          .svc-mobile-accordion-copy,
+          .svc-mobile-accordion-action { overflow: hidden; }
+          .svc-mobile-accordion-media {
+            position: relative;
+            display: block;
+            height: 0;
+            border-radius: 6px;
+            transition: height 0.42s cubic-bezier(0.2, 0.75, 0.2, 1);
+          }
+          .svc-mobile-accordion-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          .svc-mobile-accordion-shade {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.42), transparent 60%);
+          }
+          .svc-mobile-accordion-copy {
+            display: block;
+            max-height: 0;
+            color: rgba(232,232,232,0.67);
+            font-family: var(--font-body);
+            font-size: 13px;
+            line-height: 1.55;
+            transition: max-height 0.42s cubic-bezier(0.2, 0.75, 0.2, 1), padding 0.3s ease;
+          }
+          .svc-mobile-accordion-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-height: 0;
+            color: var(--red-light);
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+          }
+          .svc-mobile-accordion-item.is-expanded {
+            padding: 0 0 15px;
+            border-bottom-color: transparent;
+            border-radius: 0;
+            background: transparent;
+          }
+          .svc-mobile-accordion-item.is-expanded .svc-mobile-accordion-name { color: #fff; }
+          .svc-mobile-accordion-item.is-expanded .svc-mobile-accordion-toggle {
+            color: #fff;
+            border-color: transparent;
+            background: transparent;
+            transform: rotate(180deg);
+          }
+          .svc-mobile-accordion-item.is-expanded .svc-mobile-accordion-panel {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            visibility: visible;
+          }
+          .svc-mobile-accordion-item.is-expanded .svc-mobile-accordion-media { height: clamp(165px, 48vw, 210px); }
+          .svc-mobile-accordion-item.is-expanded .svc-mobile-accordion-copy {
+            max-height: 120px;
+            padding-top: 13px;
+          }
+          .svc-mobile-accordion-item.is-expanded .svc-mobile-accordion-action {
+            max-height: 42px;
+            padding-top: 11px;
+          }
         }
-        .svc-mobile-cards {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 2px;
-          background: #0a0a0a;
-        }
-        .svc-mobile-card {
-          position: relative;
-          aspect-ratio: 4/3;
-          overflow: hidden;
-          border: none;
-          padding: 0;
-          cursor: pointer;
-          background: #111;
-          text-align: left;
-        }
-        .svc-mobile-card:last-child:nth-child(odd) {
-          grid-column: 1 / -1;
-          aspect-ratio: 16/7;
-        }
-        .svc-mobile-card-bg {
-          position: absolute; inset: 0;
-          width: 100%; height: 100%; object-fit: cover;
-          transition: transform 0.4s ease;
-        }
-        .svc-mobile-card:active .svc-mobile-card-bg { transform: scale(1.04); }
-        .svc-mobile-card-overlay {
-          position: absolute; inset: 0;
-          background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
-        }
-        .svc-mobile-card-body {
-          position: absolute; bottom: 0; left: 0; right: 0;
-          padding: 10px 12px;
-          display: flex; align-items: flex-end; gap: 6px;
-        }
-        .svc-mobile-card-num {
-          font-family: var(--font-display); font-size: 13px; font-weight: 400;
-          color: rgba(255,255,255,0.45); letter-spacing: 0.1em;
-          flex-shrink: 0; margin-bottom: 2px;
-        }
-        .svc-mobile-card-name {
-          flex: 1; font-family: var(--font-display); font-size: 14px;
-          font-weight: 400; color: #fff; letter-spacing: 0.06em;
-          line-height: 1.15;
-        }
-        .svc-mobile-card-arrow {
-          font-size: 13px; color: rgba(255,255,255,0.45);
-          flex-shrink: 0; transition: color 0.15s;
-        }
-        .svc-mobile-card--active .svc-mobile-card-arrow { color: #fff; }
       `}</style>
     </div>
   )
@@ -522,46 +726,19 @@ export default function ServicesPage() {
       <section className="svc-section svc-section--process" aria-labelledby="svc-process-heading">
         <div className="svc-section-inner">
           <div className="svc-eyebrow-row">
-            <span className="svc-eyebrow-mark" aria-hidden />
             <p className="svc-eyebrow-text">{t('servicesPage.processEyebrow')}</p>
           </div>
           <h2 id="svc-process-heading" className="svc-section-title">{t('servicesPage.processTitle')}</h2>
           <div className="svc-process-grid">
             {[
-              {
-                num: 'process1Num', title: 'process1Title', body: 'process1Body',
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" stroke="currentColor" strokeWidth="1.6"/>
-                    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.6"/>
-                  </svg>
-                ),
-              },
-              {
-                num: 'process2Num', title: 'process2Title', body: 'process2Body',
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" strokeWidth="1.6"/>
-                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" strokeWidth="1.6"/>
-                  </svg>
-                ),
-              },
-              {
-                num: 'process3Num', title: 'process3Title', body: 'process3Body',
-                icon: (
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" strokeWidth="1.6"/>
-                    <path d="M22 4L12 14.01l-3-3" stroke="currentColor" strokeWidth="1.6"/>
-                  </svg>
-                ),
-              },
+              { title: 'process1Title', body: 'process1Body' },
+              { title: 'process2Title', body: 'process2Body' },
+              { title: 'process3Title', body: 'process3Body' },
             ].map((step, i) => (
               <div key={step.title} className="svc-process-col">
-                <div className="svc-process-icon-wrap">
-                  {step.icon}
-                  <span className="svc-process-step-num">{String(i + 1).padStart(2, '0')}</span>
-                </div>
-                <div className="svc-process-connector" aria-hidden />
+                <p className="svc-process-step-label">
+                  {lang === 'de' ? 'Schritt' : 'Step'} {String(i + 1).padStart(2, '0')}
+                </p>
                 <h3 className="svc-process-heading">{t(`servicesPage.${step.title}`)}</h3>
                 <p className="svc-process-body">{t(`servicesPage.${step.body}`)}</p>
               </div>
@@ -607,42 +784,39 @@ export default function ServicesPage() {
         .svc-section--process {
           position: relative;
           padding: clamp(52px, 7vw, 92px) 0 clamp(56px, 7vw, 96px);
-          background: radial-gradient(ellipse 85% 55% at 50% 0%, rgba(192,57,43,0.14), transparent 55%), linear-gradient(180deg, #101010 0%, #070707 55%, #060606 100%);
-          border-top: 1px solid rgba(231,76,60,0.22);
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: #080808;
+          border: 0;
         }
-        .svc-section--process::before {
-          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-          background: linear-gradient(90deg, transparent 0%, rgba(231,76,60,0.85) 22%, rgba(231,76,60,0.35) 55%, transparent 100%);
-          pointer-events: none;
-        }
-        .svc-eyebrow-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-        .svc-eyebrow-mark { width: 4px; height: 28px; border-radius: 2px; background: linear-gradient(180deg, var(--red-light), var(--red)); box-shadow: 0 0 18px rgba(231,76,60,0.35); flex-shrink: 0; }
+        .svc-eyebrow-row { margin-bottom: 14px; }
         .svc-eyebrow-text { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-light); }
         .svc-section-title { margin: 0 0 clamp(28px, 4vw, 42px); font-family: var(--font-display); font-size: clamp(2rem, 3.8vw, 2.8rem); font-weight: 400; color: #fff; letter-spacing: 0.04em; line-height: 1.05; max-width: 820px; }
         .svc-section--voice { position: relative; padding: clamp(56px, 8vw, 104px) 0 clamp(72px, 11vw, 120px); background: radial-gradient(ellipse 70% 40% at 0% 30%, rgba(192,57,43,0.06), transparent 50%), var(--bg); }
         .svc-section-inner--voice { position: relative; }
         .svc-voice-rule { display: block; width: min(280px, 72vw); height: 2px; margin-bottom: clamp(26px, 4vw, 38px); border-radius: 1px; background: linear-gradient(90deg, rgba(231,76,60,0.85), rgba(231,76,60,0.15) 70%, transparent 100%); }
-        .svc-process-grid { display: grid; grid-template-columns: 1fr; gap: 2px; }
-        @media (min-width: 720px) { .svc-process-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; } }
-        .svc-process-col { position: relative; padding: clamp(28px, 4vw, 40px) clamp(22px, 3vw, 32px) clamp(28px, 4vw, 40px); background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); transition: background .25s ease; }
-        .svc-process-col:hover { background: rgba(255,255,255,0.045); }
+        .svc-process-grid { display: grid; grid-template-columns: 1fr; gap: clamp(34px, 8vw, 54px); }
         @media (min-width: 720px) {
-          .svc-process-col:first-child { border-radius: 16px 0 0 16px; }
-          .svc-process-col:last-child { border-radius: 0 16px 16px 0; }
-          .svc-process-col:not(:last-child) { border-right: none; }
+          .svc-process-grid { grid-template-columns: repeat(3, 1fr); gap: clamp(34px, 5vw, 72px); }
         }
-        @media (max-width: 719px) {
-          .svc-process-col:first-child { border-radius: 16px 16px 0 0; }
-          .svc-process-col:last-child { border-radius: 0 0 16px 16px; }
-          .svc-process-col:not(:last-child) { border-bottom: none; }
+        .svc-process-col { padding: 0; background: none; border: 0; }
+        .svc-process-step-label {
+          margin: 0 0 10px;
+          color: rgba(231,76,60,0.8);
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
         }
-        .svc-process-icon-wrap { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
-        .svc-process-icon-wrap > svg { flex-shrink: 0; color: #e74c3c; }
-        .svc-process-connector { width: 40px; height: 2px; background: linear-gradient(90deg, rgba(231,76,60,0.8), rgba(231,76,60,0.15)); border-radius: 2px; margin-bottom: 16px; }
-        .svc-process-step-num { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 400; color: rgba(255,255,255,0.07); letter-spacing: 0.04em; line-height: 1; }
-        .svc-process-heading { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(15px, 1.8vw, 18px); font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
-        .svc-process-body { margin: 0; font-size: 14px; line-height: 1.72; color: var(--silver); }
+        .svc-process-heading {
+          margin: 0 0 12px;
+          color: #fff;
+          font-family: var(--font-display);
+          font-size: clamp(22px, 2.3vw, 28px);
+          font-weight: 600;
+          letter-spacing: 0.01em;
+          line-height: 1.05;
+          text-transform: none;
+        }
+        .svc-process-body { margin: 0; max-width: 34em; font-size: 14px; line-height: 1.7; color: rgba(210,210,210,0.72); }
         .svc-testimonial-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 32px; }
         .svc-testimonial-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
         @media (min-width: 780px) { .svc-testimonial-grid { grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; } }
