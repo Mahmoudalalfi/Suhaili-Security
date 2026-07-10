@@ -1085,13 +1085,20 @@ export default function HomePage() {
             box-shadow: 0 8px 24px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.32) !important;
           }
 
+          .hero-secondary-cta > span:last-child {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+          }
+
           .hero-services-label { display: none; }
           .hero-services-arrow {
             position: relative;
             display: grid !important;
             place-items: center;
-            width: 100%;
-            height: 100%;
+            width: 24px;
+            height: 24px;
             color: #fff;
             font-size: 0;
             line-height: 0;
@@ -1100,9 +1107,9 @@ export default function HomePage() {
           .hero-services-arrow::before {
             content: '';
             position: absolute;
-            left: 16px;
-            top: 28px;
-            width: 25px;
+            left: 2px;
+            top: 13px;
+            width: 22px;
             height: 2px;
             border-radius: 999px;
             background: currentColor;
@@ -1113,10 +1120,10 @@ export default function HomePage() {
           .hero-services-arrow::after {
             content: '';
             position: absolute;
-            right: 16px;
-            top: 17px;
-            width: 12px;
-            height: 12px;
+            right: 2px;
+            top: 3px;
+            width: 10px;
+            height: 10px;
             border-top: 2px solid currentColor;
             border-right: 2px solid currentColor;
             border-radius: 1px;
