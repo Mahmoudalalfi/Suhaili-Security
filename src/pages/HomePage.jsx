@@ -1098,12 +1098,28 @@ export default function HomePage() {
           }
 
           .hero-services-arrow::before {
-            content: '\\2197';
-            font-family: var(--font-body);
-            font-size: 31px;
-            font-weight: 400;
-            line-height: 1;
-            transform: translate(1px, -2px);
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 28px;
+            width: 25px;
+            height: 2px;
+            border-radius: 999px;
+            background: currentColor;
+            transform: rotate(-45deg);
+            transform-origin: center;
+          }
+
+          .hero-services-arrow::after {
+            content: '';
+            position: absolute;
+            right: 16px;
+            top: 17px;
+            width: 12px;
+            height: 12px;
+            border-top: 2px solid currentColor;
+            border-right: 2px solid currentColor;
+            border-radius: 1px;
           }
 
           .hero-scroll-indicator { display: none !important; }
