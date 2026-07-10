@@ -1107,26 +1107,18 @@ export default function HomePage() {
           .hero-services-arrow::before {
             content: '';
             position: absolute;
-            left: 2px;
-            top: 13px;
-            width: 22px;
-            height: 2px;
-            border-radius: 999px;
+            inset: 0;
+            width: 20px;
+            height: 20px;
+            margin: auto;
             background: currentColor;
-            transform: rotate(-45deg);
-            transform-origin: center;
+            transform: translate(1px, -1px);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.5 15.5L15.5 4.5M7.5 4.5H15.5V12.5' fill='none' stroke='black' stroke-width='1.45' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.5 15.5L15.5 4.5M7.5 4.5H15.5V12.5' fill='none' stroke='black' stroke-width='1.45' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
           }
 
           .hero-services-arrow::after {
-            content: '';
-            position: absolute;
-            right: 2px;
-            top: 3px;
-            width: 10px;
-            height: 10px;
-            border-top: 2px solid currentColor;
-            border-right: 2px solid currentColor;
-            border-radius: 1px;
+            content: none;
           }
 
           .hero-scroll-indicator { display: none !important; }
