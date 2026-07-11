@@ -10,7 +10,7 @@ const scrollTop = () => {
   else window.scrollTo(0, 0)
 }
 
-const FOOTER_IMAGE = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1783329069/SuhailSecurityLogo_2_ovbjup.png'
+const FOOTER_IMAGE = 'https://res.cloudinary.com/df7obwqcy/image/upload/v1782966813/Footer_ecb4lx.png'
 
 const LINKS = {
   de: [
